@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
+import DetailActivity from "./components/page/detail/detail-activity.component";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import DetailActivity from "./components/detail-activity.component";
 
 const router = createBrowserRouter([
   {

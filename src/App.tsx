@@ -1,7 +1,7 @@
-import Header from "./components/header.component";
-import Content from "./components/main-content.component";
 import dayjs from "dayjs";
 import "dayjs/locale/id";
+import Header from "./components/layout/header.component";
+import Content from "./components/page/main/main-content.component";
 import { Outlet, useLocation } from "react-router-dom";
 import { Suspense } from "react";
 

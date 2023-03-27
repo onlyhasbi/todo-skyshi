@@ -1,17 +1,20 @@
-import Button from "./button.component";
-import Wrapper from "./wrapper.component";
-import plus from "../assets/plus.svg";
-import arrowBack from "../assets/arrow-back.svg";
-import pencil from "../assets/pencil.svg";
-import ActivityService from "../service/activity.service";
+import Button from "../../common/button.component";
+import ActivityService from "../../../service/activity.service";
+import Wrapper from "../../common/wrapper.component";
 import ListTodo from "./list-todo.component";
-import DialogModal from "./dialog.component";
+import DialogModal from "../../element/dialog.component";
+import plus from "../../../assets/plus.svg";
+import arrowBack from "../../../assets/arrow-back.svg";
+import pencil from "../../../assets/pencil.svg";
+import sort from "../../../assets/sort.svg";
 import clsx from "clsx";
 import { useNavigate, useParams } from "react-router-dom";
 import { Transition } from "@headlessui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+
+
 
 function DetailActivity() {
   const navigate = useNavigate();
@@ -107,13 +110,21 @@ function DetailActivity() {
             </button>
           </div>
 
-          <Button
-            className="bg-primary"
-            icon={plus}
-            onClick={handleOpenAddDialog}
-          >
-            Tambah
-          </Button>
+          <div className="flex items-center gap-x-[1.125rem]">
+            <button
+              className="w-[3.375rem] h-[3.375rem]"
+              onClick={() => console.log("ok")}
+            >
+              <img src={sort} alt="sort-icon" />
+            </button>
+            <Button
+              className="bg-primary"
+              icon={plus}
+              onClick={handleOpenAddDialog}
+            >
+              Tambah
+            </Button>
+          </div>
         </section>
         {<ListTodo data={response} />}
         <DialogModal isOpen={openAddDialog} setIsOpen={setOpenAddDialog} />

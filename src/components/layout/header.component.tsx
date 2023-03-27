@@ -1,4 +1,4 @@
-import Wrapper from "./wrapper.component";
+import Wrapper from "../common/wrapper.component";
 
 function Header() {
   return (

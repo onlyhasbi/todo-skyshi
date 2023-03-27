@@ -1,6 +1,6 @@
+import clsx from "clsx";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import clsx from "clsx";
 
 type TProps = {
   isOpen: boolean;

@@ -1,13 +1,13 @@
 import dayjs from "dayjs";
-import Card from "./card.component";
-import EmptyActivity from "./empty-activity.component";
+import ActivityService from "../../../service/activity.service";
+import EmptyActivity from "../../common/empty-activity.component";
+import Card from "../../common/card.component";
+import Modal from "../../common/modal.component";
+import Button from "../../common/button.component";
 import trash from "../assets/delete.svg";
-import emptyState from "../assets/activity-empty-state.svg";
-import Modal from "./modal.component";
-import Button from "./button.component";
-import warningIcon from "../assets/warning.svg";
-import circleWarning from "../assets/warning-circle.svg";
-import ActivityService from "../service/activity.service";
+import emptyState from "../../../assets/activity-empty-state.svg";
+import warningIcon from "../../../assets/warning.svg";
+import circleWarning from "../../../assets/warning-circle.svg";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -18,7 +18,6 @@ declare global {
     title: string;
     created_at: string;
   };
-
 }
 
 type TDeleteData = {

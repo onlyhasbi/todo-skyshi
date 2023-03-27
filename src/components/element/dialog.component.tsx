@@ -1,15 +1,15 @@
-import TodoService from "../service/todo.service";
-import closeIcon from "../assets/close.svg";
-import checkIcon from "../assets/check.svg";
-import chevronIcon from "../assets/chevron.svg";
-import Button from "./button.component";
+import checkIcon from "../../assets/check.svg";
+import closeIcon from "../../assets/close.svg";
+import chevronIcon from "../../assets/chevron.svg";
+import TodoService from "../../service/todo.service";
+import Button from "../common/button.component";
 import { Dialog, Transition, Listbox } from "@headlessui/react";
 import { useForm, Controller } from "react-hook-form";
-import { PRIORITY } from "../model/priority.model";
 import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { getValueTodo } from "../utils/getValueTodo.utils";
+import { getValueTodo } from "../../utils/getValueTodo.utils";
+import { PRIORITY } from "../../model/priority.model";
 
 declare global {
   type TTodoProps = {

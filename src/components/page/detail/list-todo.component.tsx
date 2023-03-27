@@ -1,18 +1,18 @@
-import EmptyActivity from "./empty-activity.component";
-import emptyTodo from "../assets/todo-empty-state.svg";
-import trash from "../assets/delete.svg";
-import pencil from "../assets/pencil.svg";
-import warningIcon from "../assets/warning.svg";
-import circleWarning from "../assets/warning-circle.svg";
-import TodoService from "../service/todo.service";
-import Checked from "./checked.component";
+import DialogModal from "../../element/dialog.component";
+import TodoService from "../../../service/todo.service";
+import Button from "../../common/button.component";
+import Checked from "../../common/checked.component";
+import Modal from "../../common/modal.component";
+import EmptyActivity from "../../common/empty-activity.component";
 import clsx from "clsx";
-import Modal from "./modal.component";
-import Button from "./button.component";
+import trash from "../../../assets/delete.svg";
+import pencil from "../../../assets/pencil.svg";
+import warningIcon from "../../../assets/warning.svg";
+import circleWarning from "../../../assets/warning-circle.svg";
+import emptyTodo from "../../../assets/todo-empty-state.svg";
 import { useState } from "react";
-import { getValueTodo } from "../utils/getValueTodo.utils";
 import { useMutation } from "@tanstack/react-query";
-import DialogModal from "./dialog.component";
+import { getValueTodo } from "../../../utils/getValueTodo.utils";
 
 type TProps = {
   data: TFetchDetailActivity | undefined;

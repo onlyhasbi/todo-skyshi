@@ -1,4 +1,4 @@
-import TodoService from "../service/todo.service";
+import TodoService from "../../service/todo.service";
 import clsx from "clsx";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
