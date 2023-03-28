@@ -1,6 +1,6 @@
 import { URL } from "./url.service";
 import axios from "axios";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 type TFetchActivity = {
   total: number;
@@ -83,7 +83,7 @@ function ActivityService() {
         return axios.patch(`${URL.ACTIVITY}/${id}`, { title });
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(["DetailActivity"]);
+        queryClient.invalidateQueries(["Activity"]);
       },
     },
   };

@@ -1,21 +1,17 @@
-import dayjs from "dayjs";
-import "dayjs/locale/id";
+import { Route, Routes } from "react-router-dom";
 import Header from "./components/layout/header.component";
-import Content from "./components/page/main/main-content.component";
-import { Outlet, useLocation } from "react-router-dom";
-import { Suspense } from "react";
+import DetailActivity from "./components/page/detail/detail-activity.component";
+import MainActivity from "./components/page/main/main-activity.component";
 
 function App() {
-  dayjs.locale("id");
-  const { pathname } = useLocation();
-
   return (
-    <Suspense fallback="Loading">
+    <>
       <Header />
-      <main className="w-full h-full">
-        {pathname === "/" ? <Content /> : <Outlet />}
-      </main>
-    </Suspense>
+      <Routes>
+        <Route path="/" element={<MainActivity />} />
+        <Route path="/detail/:id" element={<DetailActivity />} />
+      </Routes>
+    </>
   );
 }
 

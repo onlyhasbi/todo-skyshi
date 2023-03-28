@@ -10,15 +10,11 @@ import pencil from "../../../assets/pencil.svg";
 import warningIcon from "../../../assets/warning.svg";
 import circleWarning from "../../../assets/warning-circle.svg";
 import emptyTodo from "../../../assets/todo-empty-state.svg";
-import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
+import { memo, Suspense, useEffect, useMemo, useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getValueTodo } from "../../../utils/getValueTodo.utils";
 
-type TProps = {
-  data: TFetchDetailActivity | undefined;
-};
-
-type TTodoItems = {
+type TTodos = {
   id: number;
   title: string;
   activity_group_id: number;
@@ -31,91 +27,95 @@ type TDeleteData = {
   todo: string;
 };
 
-function ListTodo({ data }: TProps) {
-  if (data === undefined) {
-    return null;
-  }
+type TProps = {
+  todos: TTodos[];
+  isLoading: boolean;
+};
 
-  if (data && data.todo_items.length === 0) {
-    return <EmptyActivity src={emptyTodo} />;
-  }
-
+function ListTodo({ todos, isLoading }: TProps) {
   const [deleteData, setDeleteData] = useState<TDeleteData>({
     id: -1,
     todo: "",
   });
 
+  const [updateData, setUpdateData] = useState<TTodoProps>({
+    id: -1,
+    todo: "",
+    priority: "",
+  });
+
   const [isDelete, setIsDelete] = useState<boolean>(false);
   const [isDeleteSuccess, setIsDeleteSuccess] = useState<boolean>(false);
+  const [openUpdateDialog, setOpenUpdateDialog] = useState<boolean>(false);
+
+  const { queryDeleteTodo } = TodoService();
+  const { mutate: deleteTodo } = useMutation(queryDeleteTodo);
 
   const handleCloseModal = () => {
     setIsDelete(false);
   };
 
-  const [openUpdateDialog, setOpenUpdateDialog] = useState<boolean>(false);
-  const [updateData, setUpdateData] = useState<TTodoProps>({
-    id:-1,
-    todo: "",
-    priority: "",
-  });
-
   const handleOpenUpdateDialog = () => {
     setOpenUpdateDialog(true);
   };
 
-  const { queryDeleteTodo } = TodoService();
-  const { mutate: deleteTodo } = useMutation(queryDeleteTodo);
+  if (isLoading) return <>Loading...</>;
 
   return (
     <>
-      <ul className="space-y-[0.625rem] pb-[14.875rem]">
-        {data.todo_items.map(
-          ({ id, title, is_active, priority }: TTodoItems) => {
-            return (
-              <li
-                key={id}
-                className={clsx([
-                  "flex items-center justify-between w-full h-[5rem]",
-                  "bg-white rounded-xl shadow-xl px-[1.75rem]",
-                ])}
-              >
-                <div className="flex items-center">
-                  <Checked
-                    id={id}
-                    active={is_active}
-                    color={getValueTodo("color", priority)}
-                    label={title}
-                  />
-                  <img
-                    className="block cursor-pointer ml-[1.208rem]"
-                    onClick={() => {
-                      setUpdateData((prev) => ({
-                        ...prev,
-                        id,
-                        todo: title,
-                        priority,
-                      }));
-                      handleOpenUpdateDialog();
-                    }}
-                    src={pencil}
-                    alt="pencil-icon"
-                  />
-                </div>
-                <img
-                  className="block w-[16px] h-[18px] hover:cursor-pointer"
-                  src={trash}
-                  alt="delete-icon"
-                  onClick={() => {
-                    setDeleteData((prev) => ({ ...prev, id, todo: title }));
-                    setIsDelete(true);
-                  }}
-                />
-              </li>
-            );
-          }
-        )}
-      </ul>
-
+      {todos.length > 0 ? (
+        <Suspense fallback="Loading...">
+          <ul className="space-y-[0.625rem] pb-[14.875rem]">
+            <>
+              {todos.map(({ id, title, is_active, priority }: TTodos) => {
+                return (
+                  <li
+                    key={id}
+                    className={clsx([
+                      "flex items-center justify-between w-full h-[5rem]",
+                      "bg-white rounded-xl shadow-xl px-[1.75rem]",
+                    ])}
+                  >
+                    <div className="flex items-center">
+                      <Checked
+                        id={id}
+                        active={is_active}
+                        color={getValueTodo("color", priority)}
+                        label={title}
+                      />
+                      <img
+                        className="block cursor-pointer ml-[1.208rem]"
+                        onClick={() => {
+                          setUpdateData((prev) => ({
+                            ...prev,
+                            id,
+                            todo: title,
+                            priority,
+                          }));
+                          handleOpenUpdateDialog();
+                        }}
+                        src={pencil}
+                        alt="pencil-icon"
+                      />
+                    </div>
+                    <img
+                      className="block w-[16px] h-[18px] hover:cursor-pointer"
+                      src={trash}
+                      alt="delete-icon"
+                      onClick={() => {
+                        setDeleteData((prev) => ({ ...prev, id, todo: title }));
+                        setIsDelete(true);
+                      }}
+                    />
+                  </li>
+                );
+              })}
+            </>
+          </ul>
+        </Suspense>
+      ) : (
+        <EmptyActivity src={emptyTodo} />
+      )}
       <DialogModal
         isOpen={openUpdateDialog}
         initialValue={updateData}
@@ -177,4 +177,4 @@ function ListTodo({ data }: TProps) {
   );
 }
 
-export default ListTodo;
+export default memo(ListTodo);

@@ -19,17 +19,32 @@ type TUpdateTodo = {
   priority: string;
 };
 
+type TFetchTodos = {
+  total: number;
+  limit: number;
+  skip: number;
+  data: [];
+};
+
 function TodoService() {
   const queryClient = useQueryClient();
 
   return {
+    queryGetTodos: (id: number) => ({
+      queryKey: ["Todos"],
+      queryFn: () => {
+        return axios
+          .get<TFetchTodos>(`${URL.TODO}/?activity_group_id=${id}`)
+          .then(({ data }) => data);
+      },
+    }),
     queryPostTodo: {
       mutationKey: ["AddTodo"],
       mutationFn: (data: TFetchTodo) => {
         return axios.post<TFetchTodo>(URL.TODO, data).then(({ data }) => data);
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(["DetailActivity"]);
+        queryClient.invalidateQueries(["Todos"]);
       },
     },
     queryDeleteTodo: {
@@ -38,7 +53,7 @@ function TodoService() {
         return axios.delete(`${URL.TODO}/${id}`);
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(["DetailActivity"]);
+        queryClient.invalidateQueries(["Todos"]);
       },
     },
     queryChangeActive: {
@@ -47,16 +62,16 @@ function TodoService() {
         return axios.patch(`${URL.TODO}/${id}`, { is_active: active });
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(["DetailActivity"]);
+        queryClient.invalidateQueries(["Todos"]);
       },
     },
     queryUpdateTodo: {
       mutationKey: ["UpdateTodo"],
       mutationFn: ({ id, todo, priority }: TUpdateTodo) => {
-        return axios.patch(`${URL.TODO}/${id}`, { title:todo,priority });
+        return axios.patch(`${URL.TODO}/${id}`, { title: todo, priority });
       },
       onSuccess: () => {
-        queryClient.invalidateQueries(["DetailActivity"]);
+        queryClient.invalidateQueries(["Todos"]);
       },
     },
   };
