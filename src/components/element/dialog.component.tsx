@@ -102,13 +102,18 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-1" onClose={closeModal}>
+      <Dialog
+        as="div"
+        className="relative z-1"
+        open={isOpen}
+        onClose={closeModal}
+      >
         <Transition.Child
           as={Fragment}
-          enter="ease-out duration-100"
+          enter="ease-out duration-150"
           enterFrom="opacity-0"
           enterTo="opacity-100"
-          leave="ease-in duration-50"
+          leave="ease-in duration-100"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
@@ -118,10 +123,10 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
         <div className="fixed inset-0 flex items-center justify-center overflow-y-auto">
           <Transition.Child
             as={Fragment}
-            enter="transition ease-out duration-100 transform"
+            enter="transition ease-out duration-300 transform"
             enterFrom="opacity-0 -translate-y-3"
             enterTo="opacity-100 translate-y-0"
-            leave="transition ease-in duration-90 transform"
+            leave="transition ease-in duration-150 transform"
             leaveFrom=" translate-y-0 opacity-100"
             leaveTo="opacity-0 -translate-y-3"
           >
