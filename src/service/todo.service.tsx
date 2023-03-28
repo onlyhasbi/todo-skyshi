@@ -1,6 +1,6 @@
 import { URL } from "./url.service";
 import axios from "axios";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 type TFetchTodo = {
   activity_group_id: number;

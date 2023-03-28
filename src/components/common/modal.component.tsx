@@ -12,19 +12,12 @@ type TProps = {
 function Modal({ isOpen, className, onClose, children }: TProps) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog open={isOpen} onClose={onClose}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-100"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-50"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <Dialog.Overlay className="overflow-auto fixed top-0 left-0 w-full h-full z-1 bg-black/25" />
-        </Transition.Child>
-
+      <Dialog
+        as="div"
+        className="relative z-10"
+        open={isOpen}
+        onClose={onClose}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-150"
@@ -34,16 +27,32 @@ function Modal({ isOpen, className, onClose, children }: TProps) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Panel
-            className={clsx([
-              "fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-full shadow-xl",
-              "max-w-[30.6rem] rounded-xl bg-white text-left align-middle",
-              className
-            ])}
-          >
-            {children}
-          </Dialog.Panel>
+          <Dialog.Overlay className="fixed inset-0 w-full h-full z-1 bg-black/25" />
         </Transition.Child>
+
+        <div className="fixed inset-0 overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center">
+            <Transition.Child
+              as={Fragment}
+              enter="transition ease duration-300 transform"
+              enterFrom="opacity-0 -translate-y-3"
+              enterTo="opacity-100 translate-y-0"
+              leave="transition ease duration-150 transform"
+              leaveFrom="opacity-100 translate-y-0"
+              leaveTo="opacity-0 -translate-y-3"
+            >
+              <Dialog.Panel
+                className={clsx([
+                  "w-full shadow-xl",
+                  "max-w-[30.6rem] rounded-xl bg-white text-left transition-all",
+                  className,
+                ])}
+              >
+                {children}
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
       </Dialog>
     </Transition>
   );

@@ -1,7 +1,7 @@
-import { Route, Routes } from "react-router-dom";
 import Header from "./components/layout/header.component";
 import DetailActivity from "./components/page/detail/detail-activity.component";
 import MainActivity from "./components/page/main/main-activity.component";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
