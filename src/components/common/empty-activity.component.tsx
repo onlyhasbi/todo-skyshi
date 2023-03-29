@@ -4,6 +4,7 @@ function EmptyActivity({ src }: { src: string }) {
       className="w-[767px] mx-auto mt-[3.688rem] mb-[16.688rem]"
       src={src}
       alt="empty-image"
+      data-cy="todo-empty-state"
     />
   );
 }

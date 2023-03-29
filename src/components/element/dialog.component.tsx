@@ -130,7 +130,7 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 -translate-y-3"
           >
-            <Dialog.Panel className="w-full max-w-[51.875rem] min-h-[25.188rem] rounded-xl bg-white text-left shadow-xl transform">
+            <Dialog.Panel data-cy="modal-add" className="w-full max-w-[51.875rem] min-h-[25.188rem] rounded-xl bg-white text-left shadow-xl transform">
               <Dialog.Title
                 as="div"
                 className="flex justify-between items-center pt-[1.5rem] pl-[1.875rem] pb-[1.188rem] pr-[2.938rem]"
@@ -164,7 +164,7 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                       className="w-full font-normal placeholder:text-generalsecondary rounded-[0.375rem] py-[0.875rem] px-[1.125rem] border border-[#E5E5E5] focus:border-transparent"
                       type="text"
                       placeholder="Tambahkan nama list item"
-                      data-cy="modal-add-name-title"
+                      data-cy="modal-add-name-input"
                       {...register("todo")}
                     />
                   </div>
