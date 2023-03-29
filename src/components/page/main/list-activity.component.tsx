@@ -20,36 +20,18 @@ declare global {
   };
 }
 
-type TDeleteData = {
-  id: number;
-  activity: string;
-};
-
 function ListActivity() {
-  const [isDelete, setIsDelete] = useState<boolean>(false);
-  const [deleteData, setDeleteData] = useState<TDeleteData>({
-    id: -1,
-    activity: "",
-  });
   const navigate = useNavigate();
 
-  const setIsDeletedSuccess = useTodoStore(
-    (state) => state.setIsDeletedSuccess
-  );
+  const setIsDelete = useTodoStore((state) => state.setIsDelete);
+  const setDeleteData = useTodoStore((state) => state.setDeleteData);
 
   const { queryGetActivities } = ActivityService();
   const { data: response, isLoading } = useQuery(queryGetActivities);
   const activities = response?.data ? response.data : [];
 
-  const { queryDeleteActivity } = ActivityService();
-  const { mutate: deleteActivity } = useMutation(queryDeleteActivity);
-
   const handleDetailActivity = (id: number, title: string) => {
     navigate(`/detail/${id}`, { state: { title } });
-  };
-
-  const handleCloseModal = () => {
-    setIsDelete(false);
   };
 
   if (isLoading) return <Suspense></Suspense>;
@@ -87,11 +69,7 @@ function ListActivity() {
                     </span>
                     <button
                       onClick={() => {
-                        setDeleteData((prev: TDeleteData) => ({
-                          ...prev,
-                          id,
-                          activity: title,
-                        }));
+                        setDeleteData({ id, title, section: "activity" });
                         setIsDelete(true);
                       }}
                       data-cy="activity-item-delete-button"
@@ -108,51 +86,6 @@ function ListActivity() {
             })}
           </div>
         </Suspense>
-
-        <ModalDelete
-          className="min-h-[22rem] flex flex-col items-center"
-          isOpen={isDelete}
-          onClose={handleCloseModal}
-        >
-          <>
-            <img
-              className="block w-[3.9rem] h-[3.5rem] mt-[3.15rem] mb-[3.2rem]"
-              src={warningIcon}
-              alt="warning-icon"
-              data-cy="modal-delete-icon"
-            />
-            <p
-              className="text-lg font-medium text-center"
-              data-cy="modal-delete-title"
-            >
-              Apakah anda yakin menghapus activity
-              <br />
-              <span className="font-bold">{`"${deleteData.activity}"?`}</span>
-            </p>
-            <div className="flex gap-x-[1.25rem] justify-center mt-[2.875rem]">
-              <Button
-                className="w-[9.375rem] bg-[#F4F4F4]"
-                textStyle="mx-auto text-generalsecondary"
-                onClick={handleCloseModal}
-                data-cy="modal-delete-cancel-button"
-              >
-                Batal
-              </Button>
-              <Button
-                className="w-[9.375rem] bg-[#ED4C5C]"
-                textStyle="mx-auto"
-                onClick={() => {
-                  deleteActivity(deleteData.id);
-                  handleCloseModal();
-                  setIsDeletedSuccess(true);
-                }}
-                data-cy="modal-delete-confirm-button"
-              >
-                Hapus
-              </Button>
-            </div>
-          </>
-        </ModalDelete>
       </>
     );
 

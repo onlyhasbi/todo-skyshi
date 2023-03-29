@@ -1,13 +1,10 @@
 import DialogModal from "../../element/dialog.component";
 import TodoService from "../../../service/todo.service";
-import Button from "../../common/button.component";
 import Checked from "../../common/checked.component";
-import ModalDelete from "../../common/modal-delete.component";
 import EmptyActivity from "../../common/empty-activity.component";
 import clsx from "clsx";
 import trash from "../../../assets/delete.svg";
 import pencil from "../../../assets/pencil.svg";
-import warningIcon from "../../../assets/warning.svg";
 import emptyTodo from "../../../assets/todo-empty-state.svg";
 import getSort from "../../../utils/getSort.utils";
 import { memo, Suspense, useEffect, useState } from "react";
@@ -35,10 +32,8 @@ function ListTodo() {
   const { id } = useParams();
   const sort = useTodoStore((state) => state.sort);
 
-  const [deleteData, setDeleteData] = useState<TDeleteData>({
-    id: -1,
-    todo: "",
-  });
+  const setIsDelete = useTodoStore((state) => state.setIsDelete);
+  const setDeleteData = useTodoStore((state) => state.setDeleteData);
 
   const [updateData, setUpdateData] = useState<TTodoProps>({
     id: -1,
@@ -46,7 +41,6 @@ function ListTodo() {
     priority: "",
   });
 
-  const [isDelete, setIsDelete] = useState<boolean>(false);
   const [openUpdateDialog, setOpenUpdateDialog] = useState<boolean>(false);
 
   const { queryGetTodos } = TodoService();
@@ -56,17 +50,6 @@ function ListTodo() {
   useEffect(() => {
     setTodos(getSort(sort, response));
   }, [response, sort]);
-
-  const { queryDeleteTodo } = TodoService();
-  const { mutate: deleteTodo } = useMutation(queryDeleteTodo);
-
-  const handleCloseModal = () => {
-    setIsDelete(false);
-  };
-
-  const setIsDeletedSuccess = useTodoStore(
-    (state) => state.setIsDeletedSuccess
-  );
 
   const handleOpenUpdateDialog = () => {
     setOpenUpdateDialog(true);
@@ -116,11 +99,7 @@ function ListTodo() {
                     src={trash}
                     alt="delete-icon"
                     onClick={() => {
-                      setDeleteData((prev) => ({
-                        ...prev,
-                        id,
-                        todo: title,
-                      }));
+                      setDeleteData({ id, title, section: "list item" });
                       setIsDelete(true);
                     }}
                     data-cy="todo-item-delete-button"
@@ -136,51 +115,6 @@ function ListTodo() {
           initialValue={updateData}
           setIsOpen={setOpenUpdateDialog}
         />
-
-        <ModalDelete
-          className="min-h-[22rem] flex flex-col items-center"
-          isOpen={isDelete}
-          onClose={handleCloseModal}
-        >
-          <>
-            <img
-              className="block w-[3.9rem] h-[3.5rem] mt-[3.15rem] mb-[3.2rem]"
-              src={warningIcon}
-              alt="warning-icon"
-              data-cy="modal-delete-icon"
-            />
-            <p
-              className="text-lg font-medium text-center"
-              data-cy="modal-delete-title"
-            >
-              Apakah anda yakin menghapus activity
-              <br />
-              <span className="font-bold">{`"${deleteData.todo}"?`}</span>
-            </p>
-            <div className="flex gap-x-[1.25rem] justify-center mt-[2.875rem]">
-              <Button
-                className="w-[9.375rem] bg-[#F4F4F4]"
-                textStyle="mx-auto text-generalsecondary"
-                onClick={handleCloseModal}
-                data-cy="modal-delete-cancel-button"
-              >
-                Batal
-              </Button>
-              <Button
-                className="w-[9.375rem] bg-[#ED4C5C]"
-                textStyle="mx-auto"
-                onClick={() => {
-                  deleteTodo(deleteData.id);
-                  handleCloseModal();
-                  setIsDeletedSuccess(true);
-                }}
-                data-cy="modal-delete-confirm-button"
-              >
-                Hapus
-              </Button>
-            </div>
-          </>
-        </ModalDelete>
       </>
     );
 

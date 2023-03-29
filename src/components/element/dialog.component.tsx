@@ -229,7 +229,10 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                                     leaveFrom=" translate-y-0"
                                     leaveTo="opacity-0 -translate-y-1"
                                   >
-                                    <Listbox.Options className="absolute w-[12.813rem] overflow-hidden rounded-md bg-white shadow-lg">
+                                    <Listbox.Options
+                                      data-cy="modal-add-priority-item"
+                                      className="absolute w-[12.813rem] overflow-hidden rounded-md bg-white shadow-lg"
+                                    >
                                       {PRIORITY.map(
                                         (
                                           {
@@ -246,7 +249,7 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                                           >
                                             {({ selected }) => (
                                               <>
-                                                <div data-cy="modal-add-priority-item" className="flex items-center ml-[1.063rem] mr-[1.625rem]">
+                                                <div className="flex items-center ml-[1.063rem] mr-[1.625rem]">
                                                   <span className="w-[0.875rem] h-[0.875rem]">
                                                     {color}
                                                   </span>
