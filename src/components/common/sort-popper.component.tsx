@@ -1,6 +1,6 @@
 import checked from "../../assets/check.svg";
 import { SORT } from "../../model/sort.model";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTodoStore } from "../../store/todo";
 
 function SortPopper() {

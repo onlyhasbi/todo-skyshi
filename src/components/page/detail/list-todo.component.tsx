@@ -11,7 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getValueTodo } from "../../../utils/getValueTodo.utils";
 import { useParams } from "react-router-dom";
 import { useTodoStore } from "../../../store/todo";
-import { getSort } from "../../../utils/filter.utils";
+import { getSort } from "../../../utils/sort.utils";
 
 declare global {
   type TTodos = {
@@ -41,9 +41,7 @@ function ListTodo() {
   const { queryGetTodos } = TodoService();
   const { data: response, isLoading } = useQuery(queryGetTodos(Number(id)));
 
-  const todos = useMemo(() => {
-    return getSort(sort, response);
-  }, [response, sort]);
+  const todos = getSort(sort, response);
 
   const handleOpenUpdateDialog = () => {
     setOpenUpdateDialog(true);

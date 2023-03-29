@@ -4,11 +4,11 @@ export function getSort(by: string, values: any) {
   switch (by) {
     case "new":
       return todos.slice().sort((a: TTodos, b: TTodos) => {
-        if (a.id - b.id) return -1;
+        if (a.id < b.id) return -1;
       });
     case "old":
       return todos.slice().sort((a: TTodos, b: TTodos) => {
-        if (b.id - a.id) return 1;
+        if (a.id > b.id) return 1;
       });
     case "az":
       return todos.slice().sort((a: TTodos, b: TTodos) => {
