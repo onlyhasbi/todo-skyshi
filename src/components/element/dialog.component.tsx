@@ -185,6 +185,7 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                       render={({ field: { onChange } }) => {
                         return (
                           <Listbox
+                            data-cy="modal-add-priority-dropdown"
                             value={getValueTodo("value", selected)}
                             onChange={(e) => {
                               onChange(e);
@@ -194,10 +195,7 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                             {({ open }) => (
                               <>
                                 <div className={`relative`}>
-                                  <Listbox.Button
-                                    data-cy="modal-add-priority-dropdown"
-                                    className="flex items-center w-[12.813rem] cursor-pointer font-normal placeholder:text-generalsecondary rounded-[0.375rem] py-[0.875rem] px-[1.125rem] border border-[#E5E5E5] active:border-blue-600"
-                                  >
+                                  <Listbox.Button className="flex items-center w-[12.813rem] cursor-pointer font-normal placeholder:text-generalsecondary rounded-[0.375rem] py-[0.875rem] px-[1.125rem] border border-[#E5E5E5] active:border-blue-600">
                                     {!open ? (
                                       <>
                                         {getValueTodo("color", selected)}
