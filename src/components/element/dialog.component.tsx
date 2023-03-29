@@ -135,7 +135,10 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                 as="div"
                 className="flex justify-between items-center pt-[1.5rem] pl-[1.875rem] pb-[1.188rem] pr-[2.938rem]"
               >
-                <span className="block text-lg font-semibold leading-[1.688rem] text-generalblack">
+                <span
+                  className="block text-lg font-semibold leading-[1.688rem] text-generalblack"
+                  data-cy="modal-add-title"
+                >
                   Tambah List Item
                 </span>
                 <span>
@@ -144,24 +147,32 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                     className="w-[0.75rem] h-[0.75rem] cursor-pointer"
                     src={closeIcon}
                     alt="close-icon"
+                    data-cy="modal-add-close-button"
                   />
                 </span>
               </Dialog.Title>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="space-y-[1.625rem] border border-t-[#E5E5E5] boder-b-[#E5E5E5] pt-[2.375rem] pb-[1.438rem]">
                   <div className="space-y-[0.563rem] mx-[1.75rem]">
-                    <label className="block font-semibold w-full text-xs leading-[1.125rem] text-generalblack">
+                    <label
+                      data-cy="modal-add-name-title"
+                      className="block font-semibold w-full text-xs leading-[1.125rem] text-generalblack"
+                    >
                       NAMA LIST ITEM
                     </label>
                     <input
                       className="w-full font-normal placeholder:text-generalsecondary rounded-[0.375rem] py-[0.875rem] px-[1.125rem] border border-[#E5E5E5] focus:border-transparent"
                       type="text"
                       placeholder="Tambahkan nama list item"
+                      data-cy="modal-add-name-title"
                       {...register("todo")}
                     />
                   </div>
                   <div className="space-y-[0.563rem] mx-[1.75rem]">
-                    <label className=" block font-semibold w-full text-xs leading-[1.125rem] text-generalblack">
+                    <label
+                      data-cy="modal-add-priority-title"
+                      className=" block font-semibold w-full text-xs leading-[1.125rem] text-generalblack"
+                    >
                       PRIORITY
                     </label>
 
@@ -180,7 +191,10 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                             {({ open }) => (
                               <>
                                 <div className={`relative`}>
-                                  <Listbox.Button className="flex items-center w-[12.813rem] cursor-pointer font-normal placeholder:text-generalsecondary rounded-[0.375rem] py-[0.875rem] px-[1.125rem] border border-[#E5E5E5] active:border-blue-600">
+                                  <Listbox.Button
+                                    data-cy="modal-add-priority-dropdown"
+                                    className="flex items-center w-[12.813rem] cursor-pointer font-normal placeholder:text-generalsecondary rounded-[0.375rem] py-[0.875rem] px-[1.125rem] border border-[#E5E5E5] active:border-blue-600"
+                                  >
                                     {!open ? (
                                       <>
                                         {getValueTodo("color", selected)}
@@ -268,6 +282,7 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                   <Button
                     className="bg-primary text-right mr-[2.5rem]"
                     disabled={!Boolean(watch("todo"))}
+                    data-cy="modal-add-save-button"
                   >
                     {initialValue ? "Simpan" : "Tambah"}
                   </Button>
