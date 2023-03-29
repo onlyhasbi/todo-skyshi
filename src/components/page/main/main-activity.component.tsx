@@ -34,7 +34,6 @@ function MainActivity() {
             Tambah
           </Button>
         </section>
-
         <ListActivity />
       </Wrapper>
     </>

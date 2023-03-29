@@ -4,9 +4,8 @@ import { useEffect, useState } from "react";
 import { useTodoStore } from "../../store/todo";
 
 function SortPopper() {
-  const sort = useTodoStore((state) => state.sort);
   const setSort = useTodoStore((state) => state.setSort);
-  const [selected, setSelected] = useState<string>(sort);
+  const [selected, setSelected] = useState<string>("new");
 
   const handleSelected = (label: string) => {
     setSelected(label);

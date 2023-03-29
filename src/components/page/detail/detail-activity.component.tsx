@@ -14,6 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Popover, Transition } from "@headlessui/react";
+import { useClickAway } from "../../../utils/useClickAway.utils";
 
 function DetailActivity() {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ function DetailActivity() {
   const { mutate: changeTitle } = useMutation(queryChangeTitle);
 
   const { register, setFocus, setValue, getValues } = useForm();
+  const { ref: titleRef, ...rest } = register("title");
 
   useEffect(() => {
     setValue("title", activityTitle);
@@ -44,12 +46,16 @@ function DetailActivity() {
     setOpenAddDialog(true);
   };
 
+  const handleUpdateTitle = () => {
+    setIsEditTitle(false);
+    if (getValues("title") !== title && id)
+      changeTitle({ id, title: getValues("title") });
+    setTitle(getValues("title"));
+  };
+
   const handleEditTitle = () => {
     if (isEditTitle) {
-      setIsEditTitle(false);
-      if (getValues("title") !== title && id)
-        changeTitle({ id, title: getValues("title") });
-      setTitle(getValues("title"));
+      handleUpdateTitle();
     } else {
       setIsEditTitle(true);
     }
@@ -58,6 +64,8 @@ function DetailActivity() {
   const handlePreviousPage = () => {
     navigate(-1);
   };
+
+  useClickAway(titleRef , handleUpdateTitle);
 
   return (
     <>
@@ -74,6 +82,7 @@ function DetailActivity() {
 
             {isEditTitle ? (
               <input
+                ref={titleRef}
                 type="text"
                 disabled={!isEditTitle}
                 className={clsx([
@@ -84,7 +93,7 @@ function DetailActivity() {
                   },
                 ])}
                 data-cy="todo-title"
-                {...register("title")}
+                {...rest}
               />
             ) : (
               <label
@@ -109,7 +118,10 @@ function DetailActivity() {
 
           <div className="flex items-center gap-x-[1.125rem]">
             <Popover className="relative">
-              <Popover.Button className="w-[3.375rem] h-[3.375rem]" data-cy="todo-sort-button">
+              <Popover.Button
+                className="w-[3.375rem] h-[3.375rem]"
+                data-cy="todo-sort-button"
+              >
                 <>
                   <img src={sort} alt="sort-icon" />
                 </>

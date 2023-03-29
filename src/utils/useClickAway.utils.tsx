@@ -1,9 +1,6 @@
-import { RefObject, useCallback, useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
-export function useClickAway(
-  ref: RefObject<HTMLElement>,
-  callback: () => void
-) {
+export function useClickAway(ref: any, callback: () => void) {
   const handleClickOutside = useCallback(
     (event: MouseEvent) => {
       if (!ref.current?.contains(event.target as Node)) {

@@ -16,6 +16,7 @@ function ModalInformation({ isOpen, onClose }: TProps) {
         className="relative z-10"
         open={isOpen}
         onClose={onClose}
+        data-cy="modal-information"
       >
         <Transition.Child
           as={Fragment}
@@ -45,7 +46,6 @@ function ModalInformation({ isOpen, onClose }: TProps) {
                   "w-full shadow-xl flex items-center h-[3.625rem]",
                   "max-w-[30.6rem] rounded-xl bg-white text-left transition-all",
                 ])}
-                data-cy="modal-information"
               >
                 <div className="ml-[1.875rem] flex gap-x-[0.8125rem] items-center">
                   <img
