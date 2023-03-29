@@ -10,7 +10,7 @@ function Wrapper({
   const fade = useSpring({
     from: { opacity: "0" },
     to: { opacity: "1" },
-    delay: 125,
+    delay: 110,
   });
 
   return (
