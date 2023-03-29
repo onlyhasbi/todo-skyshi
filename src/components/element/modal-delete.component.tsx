@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import warningIcon from "../../assets/warning.svg";
-import Button from "./button.component";
 import ActivityService from "../../service/activity.service";
 import TodoService from "../../service/todo.service";
+import Button from "../common/button.component";
 import { useMutation } from "@tanstack/react-query";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";

@@ -1,11 +1,11 @@
 import dayjs from "dayjs";
 import Card from "../../common/card.component";
-import ActivityService from "../../../service/activity.service";
 import trash from "../../../assets/delete.svg";
 import emptyState from "../../../assets/activity-empty-state.svg";
 import EmptyActivity from "../../common/empty-activity.component";
+import ActivityService from "../../../service/activity.service";
 import { useNavigate } from "react-router-dom";
-import { memo, Suspense, } from "react";
+import { memo, Suspense } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTodoStore } from "../../../store/todo";
 
@@ -19,24 +19,21 @@ declare global {
 
 function ListActivity() {
   const navigate = useNavigate();
-
   const setIsDelete = useTodoStore((state) => state.setIsDelete);
   const setDeleteData = useTodoStore((state) => state.setDeleteData);
 
   const { queryGetActivities } = ActivityService();
-  const { data: response, isLoading } = useQuery(queryGetActivities);
+  const { data: response } = useQuery(queryGetActivities);
   const activities = response?.data ? response.data : [];
 
   const handleDetailActivity = (id: number, title: string) => {
     navigate(`/detail/${id}`, { state: { title } });
   };
 
-  if (isLoading) return <Suspense></Suspense>;
-
   if (activities.length > 0)
     return (
       <>
-        <Suspense fallback="Getting Activity...">
+        <Suspense>
           <div className="flex gap-x-[1.25rem] gap-y-[1.625rem] flex-wrap pb-[17.063rem]">
             {activities.map((activity: TActivity) => {
               const { id, title, created_at } = activity;
@@ -72,7 +69,7 @@ function ListActivity() {
                       data-cy="activity-item-delete-button"
                     >
                       <img
-                      loading="lazy"
+                        loading="lazy"
                         className="block w-[16px] h-[18px] hover:cursor-pointer"
                         src={trash}
                         alt="delete-icon"
