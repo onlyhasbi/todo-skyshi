@@ -58,10 +58,7 @@ function ListActivity() {
     return (
       <>
         <Suspense fallback="Getting Activity...">
-          <div
-            className="flex gap-x-[1.25rem] gap-y-[1.625rem] flex-wrap pb-[17.063rem]"
-            data-cy="activity-item"
-          >
+          <div className="flex gap-x-[1.25rem] gap-y-[1.625rem] flex-wrap pb-[17.063rem]">
             {activities.map((activity: TActivity) => {
               const { id, title, created_at } = activity;
               return (
