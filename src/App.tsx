@@ -2,9 +2,9 @@ import Header from "./components/layout/header.component";
 import DetailActivity from "./components/page/detail/detail-activity.component";
 import MainActivity from "./components/page/main/main-activity.component";
 import ModalInformation from "./components/common/modal-information.component";
+import ModalDelete from "./components/common/modal-delete.component";
 import { Route, Routes } from "react-router-dom";
 import { useTodoStore } from "./store/todo";
-import ModalDelete from "./components/common/modal-delete.component";
 
 function App() {
   const isDeletedSucess = useTodoStore((state) => state.isDeletedSuccess);

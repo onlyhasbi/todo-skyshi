@@ -1,6 +1,6 @@
 import { URL } from "./url.service";
 import axios from "axios";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 
 type TFetchActivity = {
   total: number;
