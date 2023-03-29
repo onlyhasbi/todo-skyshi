@@ -20,9 +20,9 @@ function ModalInformation({ isOpen, onClose }: TProps) {
       >
         <Transition.Child
           as={Fragment}
-          enter="ease-out duration-150"
+          enter="ease-out duration-100"
           enterFrom="opacity-0"
-          enterTo="opacity-100"
+          enterTo="opacity-50"
           leave="ease-in duration-100"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
@@ -34,10 +34,10 @@ function ModalInformation({ isOpen, onClose }: TProps) {
           <div className="flex min-h-full items-center justify-center">
             <Transition.Child
               as={Fragment}
-              enter="transition ease-out duration-300 transform"
+              enter="transition ease-out duration-100 transform"
               enterFrom="opacity-0 -translate-y-3"
               enterTo="opacity-100 translate-y-0"
-              leave="transition ease-in duration-150 transform"
+              leave="transition ease-in duration-100 transform"
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 -translate-y-3"
             >

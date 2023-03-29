@@ -110,7 +110,7 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
       >
         <Transition.Child
           as={Fragment}
-          enter="ease-out duration-150"
+          enter="ease-out duration-100"
           enterFrom="opacity-0"
           enterTo="opacity-100"
           leave="ease-in duration-100"
@@ -123,10 +123,10 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
         <div className="fixed inset-0 flex items-center justify-center overflow-y-auto">
           <Transition.Child
             as={Fragment}
-            enter="transition ease-out duration-300 transform"
+            enter="transition ease-out duration-100 transform"
             enterFrom="opacity-0 -translate-y-3"
             enterTo="opacity-100 translate-y-0"
-            leave="transition ease-in duration-150 transform"
+            leave="transition ease-in duration-100 transform"
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 -translate-y-3"
           >
@@ -185,7 +185,6 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                       render={({ field: { onChange } }) => {
                         return (
                           <Listbox
-                            data-cy="modal-add-priority-dropdown"
                             value={getValueTodo("value", selected)}
                             onChange={(e) => {
                               onChange(e);
@@ -195,7 +194,10 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                             {({ open }) => (
                               <>
                                 <div className={`relative`}>
-                                  <Listbox.Button className="flex items-center w-[12.813rem] cursor-pointer font-normal placeholder:text-generalsecondary rounded-[0.375rem] py-[0.875rem] px-[1.125rem] border border-[#E5E5E5] active:border-blue-600">
+                                  <Listbox.Button
+                                    data-cy="modal-add-priority-dropdown"
+                                    className="flex items-center w-[12.813rem] cursor-pointer font-normal placeholder:text-generalsecondary rounded-[0.375rem] py-[0.875rem] px-[1.125rem] border border-[#E5E5E5] active:border-blue-600"
+                                  >
                                     {!open ? (
                                       <>
                                         {getValueTodo("color", selected)}
@@ -220,17 +222,14 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
 
                                   <Transition
                                     as={Fragment}
-                                    enter="transition ease duration-150 transform"
+                                    enter="transition ease duration-100 transform"
                                     enterFrom="opacity-0 -translate-y-1"
                                     enterTo=" translate-y-0"
                                     leave="transition ease duration-100 transform"
                                     leaveFrom=" translate-y-0"
                                     leaveTo="opacity-0 -translate-y-1"
                                   >
-                                    <Listbox.Options
-                                      data-cy="modal-add-priority-item"
-                                      className="absolute w-[12.813rem] overflow-hidden rounded-md bg-white shadow-lg"
-                                    >
+                                    <Listbox.Options className="absolute w-[12.813rem] overflow-hidden rounded-md bg-white shadow-lg">
                                       {PRIORITY.map(
                                         (
                                           {
@@ -242,6 +241,7 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                                         ) => (
                                           <Listbox.Option
                                             key={index}
+                                            data-cy="modal-add-priority-item"
                                             className={`py-[0.875rem] border-b text-generalsecondary cursor-pointer hover:bg-sky-100`}
                                             value={value}
                                           >
