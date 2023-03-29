@@ -51,71 +51,75 @@ function ListTodo() {
     setOpenUpdateDialog(true);
   };
 
-  if (todos.length > 0) {
-    return (
-      <>
-        <Suspense>
-          <ul className="space-y-[0.625rem] pb-[14.875rem]">
-            {todos.map(({ id, title, is_active, priority }: TTodos) => {
-              return (
-                <li
-                  key={id}
-                  className={clsx([
-                    "flex items-center justify-between w-full h-[5rem]",
-                    "bg-white rounded-xl shadow-xl px-[1.75rem]",
-                  ])}
-                >
-                  <div className="flex items-center">
-                    <Checked
-                      id={id}
-                      active={is_active}
-                      color={getValueTodo("color", priority)}
-                      label={title}
-                    />
+  if (isSuccess) {
+    if (todos.length > 0) {
+      return (
+        <>
+          <Suspense>
+            <ul className="space-y-[0.625rem] pb-[14.875rem]">
+              {todos.map(({ id, title, is_active, priority }: TTodos) => {
+                return (
+                  <li
+                    key={id}
+                    className={clsx([
+                      "flex items-center justify-between w-full h-[5rem]",
+                      "bg-white rounded-xl shadow-xl px-[1.75rem]",
+                    ])}
+                  >
+                    <div className="flex items-center">
+                      <Checked
+                        id={id}
+                        active={is_active}
+                        color={getValueTodo("color", priority)}
+                        label={title}
+                      />
+                      <img
+                        loading="lazy"
+                        className="block cursor-pointer ml-[1.208rem]"
+                        onClick={() => {
+                          setUpdateData((prev) => ({
+                            ...prev,
+                            id,
+                            todo: title,
+                            priority,
+                          }));
+                          handleOpenUpdateDialog();
+                        }}
+                        src={pencil}
+                        alt="pencil-icon"
+                        data-cy="todo-item-edit-button"
+                      />
+                    </div>
                     <img
                       loading="lazy"
-                      className="block cursor-pointer ml-[1.208rem]"
+                      className="block w-[16px] h-[18px] hover:cursor-pointer"
+                      src={trash}
+                      alt="delete-icon"
                       onClick={() => {
-                        setUpdateData((prev) => ({
-                          ...prev,
-                          id,
-                          todo: title,
-                          priority,
-                        }));
-                        handleOpenUpdateDialog();
+                        setDeleteData({ id, title, section: "list item" });
+                        setIsDelete(true);
                       }}
-                      src={pencil}
-                      alt="pencil-icon"
-                      data-cy="todo-item-edit-button"
+                      data-cy="todo-item-delete-button"
                     />
-                  </div>
-                  <img
-                    loading="lazy"
-                    className="block w-[16px] h-[18px] hover:cursor-pointer"
-                    src={trash}
-                    alt="delete-icon"
-                    onClick={() => {
-                      setDeleteData({ id, title, section: "list item" });
-                      setIsDelete(true);
-                    }}
-                    data-cy="todo-item-delete-button"
-                  />
-                </li>
-              );
-            })}
-          </ul>
-        </Suspense>
+                  </li>
+                );
+              })}
+            </ul>
+          </Suspense>
 
-        <DialogModal
-          isOpen={openUpdateDialog}
-          initialValue={updateData}
-          setIsOpen={setOpenUpdateDialog}
-        />
-      </>
-    );
-  } else {
-    return <EmptyActivity src={emptyTodo} />;
+          <DialogModal
+            isOpen={openUpdateDialog}
+            initialValue={updateData}
+            setIsOpen={setOpenUpdateDialog}
+          />
+        </>
+      );
+    } else {
+      return <EmptyActivity src={emptyTodo} />;
+    }
   }
+  
+  return null;
 }
 
 export default memo(ListTodo);

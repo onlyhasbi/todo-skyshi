@@ -5,7 +5,7 @@ import emptyState from "../../../assets/activity-empty-state.svg?inline";
 import EmptyActivity from "../../common/empty-activity.component";
 import ActivityService from "../../../service/activity.service";
 import { useNavigate } from "react-router-dom";
-import { memo, Suspense, useEffect, useState } from "react";
+import { memo, Suspense } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTodoStore } from "../../../store/todo";
 
@@ -29,9 +29,9 @@ function ListActivity() {
     navigate(`/detail/${id}`, { state: { title } });
   };
 
-  if (isSuccess && activities?.data.length > 0) {
-    return (
-      <>
+  if (isSuccess) {
+    if (activities?.data.length > 0) {
+      return (
         <Suspense>
           <div className="flex gap-x-[1.25rem] gap-y-[1.625rem] flex-wrap pb-[17.063rem]">
             {activities.data.map((activity: TActivity) => {
@@ -80,11 +80,13 @@ function ListActivity() {
             })}
           </div>
         </Suspense>
-      </>
-    );
-  } else {
-    return <EmptyActivity src={emptyState} />;
+      );
+    } else {
+      return <EmptyActivity src={emptyState} />;
+    }
   }
+
+  return <></>;
 }
 
 export default memo(ListActivity);
