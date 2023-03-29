@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import circleWarning from "../../assets/warning-circle.svg";
+import circleWarning from "../../assets/warning-circle.svg?inline";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 

@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import Card from "../../common/card.component";
-import trash from "../../../assets/delete.svg";
-import emptyState from "../../../assets/activity-empty-state.svg";
+import trash from "../../../assets/delete.svg?inline";
+import emptyState from "../../../assets/activity-empty-state.svg?inline";
 import EmptyActivity from "../../common/empty-activity.component";
 import ActivityService from "../../../service/activity.service";
 import { useNavigate } from "react-router-dom";
@@ -23,14 +23,16 @@ function ListActivity() {
   const setDeleteData = useTodoStore((state) => state.setDeleteData);
 
   const { queryGetActivities } = ActivityService();
-  const { data: response } = useQuery(queryGetActivities);
+  const { data: response, isLoading } = useQuery(queryGetActivities);
   const activities = response?.data ? response.data : [];
 
   const handleDetailActivity = (id: number, title: string) => {
     navigate(`/detail/${id}`, { state: { title } });
   };
 
-  if (activities.length > 0)
+  if (isLoading) <Suspense></Suspense>;
+
+  if (activities.length > 0) {
     return (
       <>
         <Suspense>
@@ -83,8 +85,9 @@ function ListActivity() {
         </Suspense>
       </>
     );
-
-  return <EmptyActivity src={emptyState} />;
+  } else {
+    return <EmptyActivity src={emptyState} />;
+  }
 }
 
 export default memo(ListActivity);

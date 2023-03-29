@@ -1,9 +1,9 @@
-import plus from "../../../assets/plus.svg";
+import plus from "../../../assets/plus.svg?inline";
 import ActivityService from "../../../service/activity.service";
 import Button from "../../common/button.component";
+import Wrapper from "../../layout/wrapper.component";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, lazy, Suspense } from "react";
-const Wrapper = lazy(() => import("../../layout/wrapper.component"));
 const ListActivity = lazy(() => import("./list-activity.component"));
 
 function MainActivity() {

@@ -1,8 +1,8 @@
-import redCircle from "../assets/red.svg";
-import orangeCircle from "../assets/orange.svg";
-import greenCircle from "../assets/green.svg";
-import blueCircle from "../assets/blue.svg";
-import purpleCircle from "../assets/purple.svg";
+import redCircle from "../assets/red.svg?inline";
+import orangeCircle from "../assets/orange.svg?inline";
+import greenCircle from "../assets/green.svg?inline";
+import blueCircle from "../assets/blue.svg?inline";
+import purpleCircle from "../assets/purple.svg?inline";
 
 export const PRIORITY = [
   {

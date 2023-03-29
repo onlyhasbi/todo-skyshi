@@ -2,9 +2,9 @@ import TodoService from "../../../service/todo.service";
 import Checked from "../../common/checked.component";
 import EmptyActivity from "../../common/empty-activity.component";
 import clsx from "clsx";
-import trash from "../../../assets/delete.svg";
-import pencil from "../../../assets/pencil.svg";
-import emptyTodo from "../../../assets/todo-empty-state.svg";
+import trash from "../../../assets/delete.svg?inline";
+import pencil from "../../../assets/pencil.svg?inline";
+import emptyTodo from "../../../assets/todo-empty-state.svg?inline";
 import { lazy, memo, Suspense, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getValueTodo } from "../../../utils/getValueTodo.utils";
@@ -39,7 +39,7 @@ function ListTodo() {
   const [openUpdateDialog, setOpenUpdateDialog] = useState<boolean>(false);
 
   const { queryGetTodos } = TodoService();
-  const { data: response } = useQuery(queryGetTodos(Number(id)));
+  const { data: response, isLoading } = useQuery(queryGetTodos(Number(id)));
 
   const [todos, setTodos] = useState<TTodos[]>([]);
 
@@ -51,7 +51,9 @@ function ListTodo() {
     setOpenUpdateDialog(true);
   };
 
-  if (todos.length > 0)
+  if (isLoading) <Suspense></Suspense>;
+
+  if (todos.length > 0) {
     return (
       <>
         <Suspense>
@@ -113,8 +115,9 @@ function ListTodo() {
         />
       </>
     );
-
-  return <EmptyActivity src={emptyTodo} />;
+  } else {
+    return <EmptyActivity src={emptyTodo} />;
+  }
 }
 
 export default memo(ListTodo);

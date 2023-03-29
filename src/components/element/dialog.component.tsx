@@ -1,7 +1,7 @@
-import checkIcon from "../../assets/check.svg";
-import closeIcon from "../../assets/close.svg";
-import chevronIcon from "../../assets/chevron.svg";
-import TodoService from "../../service/todo.service";
+import checkIcon from "../../assets/check.svg?inline";
+import closeIcon from "../../assets/close.svg?inline";
+import chevronIcon from "../../assets/chevron.svg?inline";
+import TodoService from "../../service/todo.service?inline";
 import Button from "../common/button.component";
 import { Dialog, Transition, Listbox } from "@headlessui/react";
 import { useForm, Controller } from "react-hook-form";
