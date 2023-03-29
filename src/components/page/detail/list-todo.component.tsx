@@ -158,7 +158,7 @@ function ListTodo() {
                 className="w-[9.375rem] bg-[#F4F4F4]"
                 textStyle="mx-auto text-generalsecondary"
                 onClick={handleCloseModal}
-                data-cy="modal-delete-cancel-icon"
+                data-cy="modal-delete-cancel-button"
               >
                 Batal
               </Button>
