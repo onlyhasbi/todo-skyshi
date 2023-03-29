@@ -23,7 +23,7 @@ function SortPopper() {
               setSort(value);
             }}
             className="h-[3.25rem] flex items-center px-[1.5rem] cursor-pointer"
-            data-cy={selected === value ? "sort-selection-selected" : "false"}
+            data-cy="sort-selection"
           >
             <img
               className="block mr-[1.078rem] cursor-pointer"

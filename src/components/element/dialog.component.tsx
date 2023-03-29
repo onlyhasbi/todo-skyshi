@@ -130,7 +130,10 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 -translate-y-3"
           >
-            <Dialog.Panel data-cy="modal-add" className="w-full max-w-[51.875rem] min-h-[25.188rem] rounded-xl bg-white text-left shadow-xl transform">
+            <Dialog.Panel
+              data-cy="modal-add"
+              className="w-full max-w-[51.875rem] min-h-[25.188rem] rounded-xl bg-white text-left shadow-xl transform"
+            >
               <Dialog.Title
                 as="div"
                 className="flex justify-between items-center pt-[1.5rem] pl-[1.875rem] pb-[1.188rem] pr-[2.938rem]"
@@ -243,7 +246,7 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                                           >
                                             {({ selected }) => (
                                               <>
-                                                <div className="flex items-center ml-[1.063rem] mr-[1.625rem]">
+                                                <div data-cy="modal-add-priority-item" className="flex items-center ml-[1.063rem] mr-[1.625rem]">
                                                   <span className="w-[0.875rem] h-[0.875rem]">
                                                     {color}
                                                   </span>

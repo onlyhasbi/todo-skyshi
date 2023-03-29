@@ -9,7 +9,7 @@ type TProps = {
   children: React.ReactNode;
 };
 
-function Modal({ isOpen, className, onClose, children }: TProps) {
+function ModalDelete({ isOpen, className, onClose, children }: TProps) {
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
@@ -60,4 +60,4 @@ function Modal({ isOpen, className, onClose, children }: TProps) {
   );
 }
 
-export default Modal;
+export default ModalDelete;

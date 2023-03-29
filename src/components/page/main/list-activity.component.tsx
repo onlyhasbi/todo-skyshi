@@ -1,15 +1,15 @@
 import dayjs from "dayjs";
 import Card from "../../common/card.component";
 import Button from "../../common/button.component";
-import Modal from "../../common/modal.component";
+import ModalDelete from "../../common/modal-delete.component";
 import ActivityService from "../../../service/activity.service";
 import trash from "../../../assets/delete.svg";
 import warningIcon from "../../../assets/warning.svg";
 import emptyState from "../../../assets/activity-empty-state.svg";
+import EmptyActivity from "../../common/empty-activity.component";
 import { useNavigate } from "react-router-dom";
 import { memo, Suspense, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import EmptyActivity from "../../common/empty-activity.component";
 import { useTodoStore } from "../../../store/todo";
 
 declare global {
@@ -109,7 +109,7 @@ function ListActivity() {
           </div>
         </Suspense>
 
-        <Modal
+        <ModalDelete
           className="min-h-[22rem] flex flex-col items-center"
           isOpen={isDelete}
           onClose={handleCloseModal}
@@ -152,7 +152,7 @@ function ListActivity() {
               </Button>
             </div>
           </>
-        </Modal>
+        </ModalDelete>
       </>
     );
 

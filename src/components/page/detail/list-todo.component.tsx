@@ -2,7 +2,7 @@ import DialogModal from "../../element/dialog.component";
 import TodoService from "../../../service/todo.service";
 import Button from "../../common/button.component";
 import Checked from "../../common/checked.component";
-import Modal from "../../common/modal.component";
+import ModalDelete from "../../common/modal-delete.component";
 import EmptyActivity from "../../common/empty-activity.component";
 import clsx from "clsx";
 import trash from "../../../assets/delete.svg";
@@ -133,7 +133,7 @@ function ListTodo() {
           setIsOpen={setOpenUpdateDialog}
         />
 
-        <Modal
+        <ModalDelete
           className="min-h-[22rem] flex flex-col items-center"
           isOpen={isDelete}
           onClose={handleCloseModal}
@@ -175,7 +175,7 @@ function ListTodo() {
               </Button>
             </div>
           </>
-        </Modal>
+        </ModalDelete>
       </>
     );
 
