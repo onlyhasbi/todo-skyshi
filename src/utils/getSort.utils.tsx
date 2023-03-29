@@ -24,7 +24,7 @@ const sort = {
 
 function getSort(by: string, values: any) {
   let todos = values ? values.todo_items : [];
-  return todos.slice().sort(sort[by]);
+  return [...todos].sort(sort[by]);
 }
 
 export default getSort;

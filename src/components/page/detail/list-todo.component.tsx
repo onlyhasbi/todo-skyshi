@@ -64,6 +64,10 @@ function ListTodo() {
     setIsDelete(false);
   };
 
+  const setIsDeletedSuccess = useTodoStore(
+    (state) => state.setIsDeletedSuccess
+  );
+
   const handleOpenUpdateDialog = () => {
     setOpenUpdateDialog(true);
   };
@@ -168,6 +172,7 @@ function ListTodo() {
                 onClick={() => {
                   deleteTodo(deleteData.id);
                   handleCloseModal();
+                  setIsDeletedSuccess(true);
                 }}
                 data-cy="modal-delete-confirm-button"
               >
