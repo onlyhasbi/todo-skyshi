@@ -68,94 +68,99 @@ function DetailActivity() {
   useClickAway(titleRef, handleUpdateTitle);
 
   return (
-    <Suspense>
-      <Wrapper>
-        <section className="flex justify-between py-[3.063rem]">
-          <div className="w-7/12 flex items-center text-4xl font-bold text-generalblack">
-            <img
-              loading="lazy"
-              className="block cursor-pointer"
-              onClick={handlePreviousPage}
-              src={arrowBack}
-              alt="arrow-back-icon"
-              data-cy="todo-back-button"
-            />
-
-            {isEditTitle ? (
-              <input
-                ref={titleRef}
-                type="text"
-                disabled={!isEditTitle}
-                className={clsx([
-                  "ml-[36.33px] mr-[23px] text-4xl font-bold text-generalblack",
-                  "bg-transparent border-none outline-none ring-0 focus:ring-0 p-0",
-                  {
-                    "w-6/12 underline underline-offset-[.9rem]": isEditTitle,
-                  },
-                ])}
-                data-cy="todo-title"
-                {...rest}
-              />
-            ) : (
-              <label
-                onClick={() => {
-                  setIsEditTitle(true);
-                }}
-                className="ml-[36.33px] mr-[23px] text-4xl font-bold text-generalblack"
-                data-cy="todo-title"
-              >
-                {title}
-              </label>
-            )}
-
-            <button onClick={handleEditTitle} data-cy="todo-title-edit-button">
+    <>
+      <Suspense>
+        <Wrapper>
+          <section className="flex justify-between py-[3.063rem]">
+            <div className="w-7/12 flex items-center text-4xl font-bold text-generalblack">
               <img
                 loading="lazy"
                 className="block cursor-pointer"
-                src={pencil}
-                alt="pencil-icon"
+                onClick={handlePreviousPage}
+                src={arrowBack}
+                alt="arrow-back-icon"
+                data-cy="todo-back-button"
               />
-            </button>
-          </div>
 
-          <div className="flex items-center gap-x-[1.125rem]">
-            <Popover className="relative">
-              <Popover.Button
-                className="w-[3.375rem] h-[3.375rem]"
-                data-cy="todo-sort-button"
-              >
-                <>
-                  <img loading="lazy" src={sort} alt="sort-icon" />
-                </>
-              </Popover.Button>
-              <Transition
-                enter="transition ease-out duration-100 transform"
-                enterFrom="opacity-0 -translate-y-3"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease-in duration-100 transform"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 -translate-y-3"
-              >
-                <Popover.Panel className="absolute top-3 -left-[6rem]">
-                  <SortPopper />
-                </Popover.Panel>
-              </Transition>
-            </Popover>
+              {isEditTitle ? (
+                <input
+                  ref={titleRef}
+                  type="text"
+                  disabled={!isEditTitle}
+                  className={clsx([
+                    "ml-[36.33px] mr-[23px] text-4xl font-bold text-generalblack",
+                    "bg-transparent border-none outline-none ring-0 focus:ring-0 p-0",
+                    {
+                      "w-6/12 underline underline-offset-[.9rem]": isEditTitle,
+                    },
+                  ])}
+                  data-cy="todo-title"
+                  {...rest}
+                />
+              ) : (
+                <label
+                  onClick={() => {
+                    setIsEditTitle(true);
+                  }}
+                  className="ml-[36.33px] mr-[23px] text-4xl font-bold text-generalblack"
+                  data-cy="todo-title"
+                >
+                  {title}
+                </label>
+              )}
 
-            <Button
-              className="bg-primary"
-              icon={plus}
-              onClick={handleOpenAddDialog}
-              data-cy="todo-add-button"
-            >
-              Tambah
-            </Button>
-          </div>
-        </section>
-        {<ListTodo />}
-      </Wrapper>
+              <button
+                onClick={handleEditTitle}
+                data-cy="todo-title-edit-button"
+              >
+                <img
+                  loading="lazy"
+                  className="block cursor-pointer"
+                  src={pencil}
+                  alt="pencil-icon"
+                />
+              </button>
+            </div>
+
+            <div className="flex items-center gap-x-[1.125rem]">
+              <Popover className="relative">
+                <Popover.Button
+                  className="w-[3.375rem] h-[3.375rem]"
+                  data-cy="todo-sort-button"
+                >
+                  <>
+                    <img loading="lazy" src={sort} alt="sort-icon" />
+                  </>
+                </Popover.Button>
+                <Transition
+                  enter="transition ease-out duration-100 transform"
+                  enterFrom="opacity-0 -translate-y-3"
+                  enterTo="opacity-100 translate-y-0"
+                  leave="transition ease-in duration-100 transform"
+                  leaveFrom="opacity-100 translate-y-0"
+                  leaveTo="opacity-0 -translate-y-3"
+                >
+                  <Popover.Panel className="absolute top-3 -left-[6rem]">
+                    <SortPopper />
+                  </Popover.Panel>
+                </Transition>
+              </Popover>
+
+              <Button
+                className="bg-primary"
+                icon={plus}
+                onClick={handleOpenAddDialog}
+                data-cy="todo-add-button"
+              >
+                Tambah
+              </Button>
+            </div>
+          </section>
+          <ListTodo />
+        </Wrapper>
+      </Suspense>
       <DialogModal isOpen={openAddDialog} setIsOpen={setOpenAddDialog} />
-    </Suspense>
+    </>
   );
 }
 

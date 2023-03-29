@@ -37,6 +37,9 @@ function ListTodo() {
   });
 
   const [openUpdateDialog, setOpenUpdateDialog] = useState<boolean>(false);
+  const handleOpenUpdateDialog = () => {
+    setOpenUpdateDialog(true);
+  };
 
   const { queryGetTodos } = TodoService();
   const { data: response, isSuccess } = useQuery(queryGetTodos(Number(id)));
@@ -46,10 +49,6 @@ function ListTodo() {
       return getSort(sort, response);
     }
   }, [response, sort]);
-
-  const handleOpenUpdateDialog = () => {
-    setOpenUpdateDialog(true);
-  };
 
   if (isSuccess) {
     if (todos.length > 0) {
@@ -106,7 +105,6 @@ function ListTodo() {
               })}
             </ul>
           </Suspense>
-
           <DialogModal
             isOpen={openUpdateDialog}
             initialValue={updateData}
@@ -118,7 +116,7 @@ function ListTodo() {
       return <EmptyActivity src={emptyTodo} />;
     }
   }
-  
+
   return null;
 }
 
