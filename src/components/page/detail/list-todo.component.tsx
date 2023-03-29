@@ -5,7 +5,7 @@ import clsx from "clsx";
 import trash from "../../../assets/delete.svg?inline";
 import pencil from "../../../assets/pencil.svg?inline";
 import emptyTodo from "../../../assets/todo-empty-state.svg?inline";
-import { lazy, memo, Suspense, useEffect, useState } from "react";
+import { lazy, memo, Suspense, useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getValueTodo } from "../../../utils/getValueTodo.utils";
 import { useParams } from "react-router-dom";
@@ -39,24 +39,19 @@ function ListTodo() {
   const [openUpdateDialog, setOpenUpdateDialog] = useState<boolean>(false);
 
   const { queryGetTodos } = TodoService();
-  const {
-    data: response,
-    isLoading,
-    isSuccess,
-  } = useQuery(queryGetTodos(Number(id)));
+  const { data: response, isSuccess } = useQuery(queryGetTodos(Number(id)));
 
-  const [todos, setTodos] = useState<TTodos[]>([]);
-
-  useEffect(() => {
-    setTodos(getSort(sort, response));
+  const todos = useMemo(() => {
+    if (isSuccess) {
+      return getSort(sort, response);
+    }
   }, [response, sort]);
 
   const handleOpenUpdateDialog = () => {
     setOpenUpdateDialog(true);
   };
 
-  if (isLoading) <Suspense></Suspense>;
-  if (isSuccess && todos.length > 0) {
+  if (todos.length > 0) {
     return (
       <>
         <Suspense>

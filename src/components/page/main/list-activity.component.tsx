@@ -5,7 +5,7 @@ import emptyState from "../../../assets/activity-empty-state.svg?inline";
 import EmptyActivity from "../../common/empty-activity.component";
 import ActivityService from "../../../service/activity.service";
 import { useNavigate } from "react-router-dom";
-import { memo, Suspense } from "react";
+import { memo, Suspense, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTodoStore } from "../../../store/todo";
 
@@ -23,20 +23,18 @@ function ListActivity() {
   const setDeleteData = useTodoStore((state) => state.setDeleteData);
 
   const { queryGetActivities } = ActivityService();
-  const { data: response, isLoading, isSuccess } = useQuery(queryGetActivities);
-  const activities = response?.data ? response.data : [];
+  const { data: activities, isSuccess } = useQuery(queryGetActivities);
 
   const handleDetailActivity = (id: number, title: string) => {
     navigate(`/detail/${id}`, { state: { title } });
   };
 
-  if (isLoading) <Suspense></Suspense>;
-  if (isSuccess && activities.length > 0) {
+  if (isSuccess && activities?.data.length > 0) {
     return (
       <>
         <Suspense>
           <div className="flex gap-x-[1.25rem] gap-y-[1.625rem] flex-wrap pb-[17.063rem]">
-            {activities.map((activity: TActivity) => {
+            {activities.data.map((activity: TActivity) => {
               const { id, title, created_at } = activity;
               return (
                 <Card
