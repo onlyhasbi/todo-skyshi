@@ -20,10 +20,10 @@ type TUpdateTodo = {
 };
 
 type TFetchTodos = {
-  total: number;
-  limit: number;
-  skip: number;
-  data: [];
+  id: number;
+  title: string;
+  created_at: string;
+  todo_items: [];
 };
 
 function TodoService() {
@@ -34,7 +34,7 @@ function TodoService() {
       queryKey: ["Todos"],
       queryFn: () => {
         return axios
-          .get<TFetchTodos>(`${URL.TODO}/?activity_group_id=${id}`)
+          .get<TFetchTodos>(`${URL.ACTIVITY}/${id}`)
           .then(({ data }) => data);
       },
     }),

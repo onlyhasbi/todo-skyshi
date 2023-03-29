@@ -1,5 +1,5 @@
 function getSort(sort: string, values: any) {
-  let todos = values ? values.data : [];
+  let todos = values ? values.todo_items : [];
   return todos.slice().sort((a: TTodos, b: TTodos) => {
     if (sort === "new") return a.id < b.id;
     if (sort === "old") return a.id > b.id;
