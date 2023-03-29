@@ -42,6 +42,7 @@ function ListTodo() {
   const { data: response, isLoading } = useQuery(queryGetTodos(Number(id)));
 
   const todos = getSort(sort, response);
+  console.log(todos);
 
   const handleOpenUpdateDialog = () => {
     setOpenUpdateDialog(true);

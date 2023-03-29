@@ -5,7 +5,10 @@ export function getSort(by: string, values: any) {
     case "new":
       return todos.slice().sort((a: TTodos, b: TTodos) => a.id - b.id);
     case "old":
-      return todos.slice().sort((a: TTodos, b: TTodos) => b.id - a.id);
+      return todos
+        .slice()
+        .sort((a: TTodos, b: TTodos) => a.id - b.id)
+        .reverse();
     case "az":
       return todos
         .slice()
