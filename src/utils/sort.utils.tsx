@@ -3,23 +3,21 @@ export function getSort(by: string, values: any) {
 
   switch (by) {
     case "new":
-      return todos.slice().sort((a: TTodos, b: TTodos) => a.id - b.id);
+      return [...todos].sort((a: TTodos, b: TTodos) => b.id - a.id);
     case "old":
-      return todos
-        .slice()
-        .sort((a: TTodos, b: TTodos) => a.id - b.id)
-        .reverse();
+      return [...todos].sort((a: TTodos, b: TTodos) => a.id - b.id);
     case "az":
-      return todos
-        .slice()
-        .sort((a: TTodos, b: TTodos) => a.title.localeCompare(b.title));
+      return [...todos].sort((a: TTodos, b: TTodos) =>
+        a.title.localeCompare(b.title)
+      );
     case "za":
-      return todos
-        .slice()
+      return [...todos]
         .sort((a: TTodos, b: TTodos) => a.title.localeCompare(b.title))
         .reverse();
     case "unchecked":
-      return todos.slice().sort((a: TTodos, b: TTodos) => b.is_active === 1);
+      return [...todos].sort(
+        (a: TTodos, b: TTodos) => b.is_active - a.is_active
+      );
     default:
       return todos;
   }

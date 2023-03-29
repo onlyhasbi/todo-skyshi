@@ -6,7 +6,7 @@ import clsx from "clsx";
 import trash from "../../../assets/delete.svg";
 import pencil from "../../../assets/pencil.svg";
 import emptyTodo from "../../../assets/todo-empty-state.svg";
-import { memo, Suspense, useMemo, useState } from "react";
+import { memo, Suspense, useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getValueTodo } from "../../../utils/getValueTodo.utils";
 import { useParams } from "react-router-dom";
@@ -41,8 +41,11 @@ function ListTodo() {
   const { queryGetTodos } = TodoService();
   const { data: response, isLoading } = useQuery(queryGetTodos(Number(id)));
 
-  const todos = getSort(sort, response);
-  console.log(todos);
+  const [todos, setTodos] = useState<TTodos[]>([]);
+
+  useEffect(() => {
+    setTodos(getSort(sort, response));
+  }, [response,sort]);
 
   const handleOpenUpdateDialog = () => {
     setOpenUpdateDialog(true);
