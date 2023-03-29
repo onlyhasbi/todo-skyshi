@@ -24,7 +24,7 @@ function App() {
         isOpen={isDeletedSucess}
         onClose={() => setIsDeletedSuceess(false)}
       >
-        <div className="ml-[1.875rem] flex gap-x-[0.8125rem] items-center">
+        <div className="ml-[1.875rem] flex gap-x-[0.8125rem] items-center" data-cy="modal-information">
           <img src={circleWarning} alt="circle-warning-icon" data-cy="modal-information-icon"/>
           <p className="font-medium text-sm" data-cy="modal-information-title">Activity berhasil dihapus</p>
         </div>

@@ -17,6 +17,7 @@ function Modal({ isOpen, className, onClose, children }: TProps) {
         className="relative z-10"
         open={isOpen}
         onClose={onClose}
+        data-cy="modal-delete"
       >
         <Transition.Child
           as={Fragment}

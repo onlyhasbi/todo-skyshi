@@ -69,6 +69,7 @@ function ListActivity() {
                   <div
                     onClick={() => handleDetailActivity(id, title)}
                     className="h-full"
+                    data-cy="activity-item"
                   >
                     <h3
                       className="text-lg font-bold text-generalblack"
