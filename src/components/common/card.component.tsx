@@ -13,6 +13,7 @@ function Card({ className, children, ...rest }: TProps) {
         className,
       ])}
       {...rest}
+      data-cy="activity-item"
     >
       {children}
     </div>

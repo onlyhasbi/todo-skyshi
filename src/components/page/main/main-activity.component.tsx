@@ -3,22 +3,31 @@ import ActivityService from "../../../service/activity.service";
 import Wrapper from "../../common/wrapper.component";
 import Button from "../../common/button.component";
 import ListActivity from "./list-activity.component";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 function MainActivity() {
   const { queryPostActivity } = ActivityService();
+  const queryClient = useQueryClient();
   const { mutate: addActivity } = useMutation(queryPostActivity);
   const handleAddActivity = () => {
     addActivity();
   };
 
+  useEffect(() => {
+    if (queryClient.getQueryData(["Todos"], { exact: false })) {
+      queryClient.removeQueries(["Todos"]);
+    }
+  }, []);
+
   return (
     <>
       <Wrapper>
         <section className="flex justify-between py-[3.063rem]">
-          <span className="text-4xl font-bold text-generalblack">Activity</span>
+          <span className="text-4xl font-bold text-generalblack" data-cy="activity-title">Activity</span>
           <Button
             className="bg-primary"
+            data-cy="activity-add-button"
             icon={plus}
             onClick={handleAddActivity}
           >

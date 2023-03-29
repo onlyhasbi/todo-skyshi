@@ -127,7 +127,7 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
             enterFrom="opacity-0 -translate-y-3"
             enterTo="opacity-100 translate-y-0"
             leave="transition ease-in duration-150 transform"
-            leaveFrom=" translate-y-0 opacity-100"
+            leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 -translate-y-3"
           >
             <Dialog.Panel className="w-full max-w-[51.875rem] min-h-[25.188rem] rounded-xl bg-white text-left shadow-xl transform">

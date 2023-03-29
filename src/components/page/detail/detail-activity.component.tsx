@@ -8,10 +8,12 @@ import arrowBack from "../../../assets/arrow-back.svg";
 import pencil from "../../../assets/pencil.svg";
 import sort from "../../../assets/sort.svg";
 import clsx from "clsx";
+import SortPopper from "../../common/sort-popper.component";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Popover, Transition } from "@headlessui/react";
 
 function DetailActivity() {
   const navigate = useNavigate();
@@ -19,8 +21,6 @@ function DetailActivity() {
     state: { title: activityTitle },
   } = useLocation();
   const { id } = useParams();
-
-  const queryClient = useQueryClient();
 
   const [openAddDialog, setOpenAddDialog] = useState<boolean>(false);
   const [isEditTitle, setIsEditTitle] = useState(false);
@@ -56,7 +56,6 @@ function DetailActivity() {
   };
 
   const handlePreviousPage = () => {
-    queryClient.removeQueries(["Todos"]);
     navigate(-1);
   };
 
@@ -70,6 +69,7 @@ function DetailActivity() {
               onClick={handlePreviousPage}
               src={arrowBack}
               alt="arrow-back-icon"
+              data-cy="todo-back-button"
             />
 
             {isEditTitle ? (
@@ -83,6 +83,7 @@ function DetailActivity() {
                     "w-6/12 underline underline-offset-[.9rem]": isEditTitle,
                   },
                 ])}
+                data-cy="todo-title"
                 {...register("title")}
               />
             ) : (
@@ -91,12 +92,13 @@ function DetailActivity() {
                   setIsEditTitle(true);
                 }}
                 className="ml-[36.33px] mr-[23px] text-4xl font-bold text-generalblack"
+                data-cy="todo-title"
               >
                 {title}
               </label>
             )}
 
-            <button onClick={handleEditTitle}>
+            <button onClick={handleEditTitle} data-cy="todo-title-edit-button">
               <img
                 className="block cursor-pointer"
                 src={pencil}
@@ -106,16 +108,31 @@ function DetailActivity() {
           </div>
 
           <div className="flex items-center gap-x-[1.125rem]">
-            <button
-              className="w-[3.375rem] h-[3.375rem]"
-              onClick={() => console.log("ok")}
-            >
-              <img src={sort} alt="sort-icon" />
-            </button>
+            <Popover className="relative">
+              <Popover.Button className="w-[3.375rem] h-[3.375rem]" data-cy="todo-sort-button">
+                <>
+                  <img src={sort} alt="sort-icon" />
+                </>
+              </Popover.Button>
+              <Transition
+                enter="transition ease-out duration-300 transform"
+                enterFrom="opacity-0 -translate-y-3"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition ease-in duration-150 transform"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 -translate-y-3"
+              >
+                <Popover.Panel className="absolute top-3 -left-[6rem]">
+                  <SortPopper />
+                </Popover.Panel>
+              </Transition>
+            </Popover>
+
             <Button
               className="bg-primary"
               icon={plus}
               onClick={handleOpenAddDialog}
+              data-cy="todo-add-button"
             >
               Tambah
             </Button>

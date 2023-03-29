@@ -32,9 +32,10 @@ function Checked(props: TProps) {
           "focus:ring-0 checked:border-transparent appearance-none",
         ])}
         type="checkbox"
+        data-cy="todo-item-checkbox"
       />
-      <span className="ml-[1.375rem] mr-4">{color}</span>
-      <span className={`${isChecked ? "line-through" : ""}`}>{label}</span>
+      <span data-cy="todo-item-priority-indicator" className="ml-[1.375rem] mr-4">{color}</span>
+      <span className={`${isChecked ? "line-through" : ""}`} data-cy="todo-item-title">{label}</span>
     </>
   );
 }

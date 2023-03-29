@@ -9,19 +9,22 @@ import trash from "../../../assets/delete.svg";
 import pencil from "../../../assets/pencil.svg";
 import warningIcon from "../../../assets/warning.svg";
 import emptyTodo from "../../../assets/todo-empty-state.svg";
-import { memo, Suspense, useState } from "react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import getSort from "../../../utils/getSort.utils";
+import { memo, Suspense, useEffect, useState } from "react";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getValueTodo } from "../../../utils/getValueTodo.utils";
 import { useParams } from "react-router-dom";
-import { Transition } from "@headlessui/react";
+import { useTodoStore } from "../../../store/todo";
 
-type TTodos = {
-  id: number;
-  title: string;
-  activity_group_id: number;
-  is_active: number;
-  priority: string;
-};
+declare global {
+  type TTodos = {
+    id: number;
+    title: string;
+    activity_group_id: number;
+    is_active: number;
+    priority: string;
+  };
+}
 
 type TDeleteData = {
   id: number;
@@ -30,6 +33,7 @@ type TDeleteData = {
 
 function ListTodo() {
   const { id } = useParams();
+  const sort = useTodoStore((state) => state.sort);
 
   const [deleteData, setDeleteData] = useState<TDeleteData>({
     id: -1,
@@ -47,7 +51,11 @@ function ListTodo() {
 
   const { queryGetTodos } = TodoService();
   const { data: response, isLoading } = useQuery(queryGetTodos(Number(id)));
-  const todos = response ? response.data : [];
+  const [todos, setTodos] = useState<TTodos[]>([]);
+
+  useEffect(() => {
+    setTodos(getSort(sort, response));
+  }, [response, sort]);
 
   const { queryDeleteTodo } = TodoService();
   const { mutate: deleteTodo } = useMutation(queryDeleteTodo);
@@ -96,6 +104,7 @@ function ListTodo() {
                       }}
                       src={pencil}
                       alt="pencil-icon"
+                      data-cy="todo-item-edit-button"
                     />
                   </div>
                   <img
@@ -110,6 +119,7 @@ function ListTodo() {
                       }));
                       setIsDelete(true);
                     }}
+                    data-cy="todo-item-delete-button"
                   />
                 </li>
               );
@@ -133,8 +143,12 @@ function ListTodo() {
               className="block w-[3.9rem] h-[3.5rem] mt-[3.15rem] mb-[3.2rem]"
               src={warningIcon}
               alt="warning-icon"
+              data-cy="modal-delete-icon"
             />
-            <p className="text-lg font-medium text-center">
+            <p
+              className="text-lg font-medium text-center"
+              data-cy="modal-delete-title"
+            >
               Apakah anda yakin menghapus activity
               <br />
               <span className="font-bold">{`"${deleteData.todo}"?`}</span>
@@ -144,6 +158,7 @@ function ListTodo() {
                 className="w-[9.375rem] bg-[#F4F4F4]"
                 textStyle="mx-auto text-generalsecondary"
                 onClick={handleCloseModal}
+                data-cy="modal-delete-cancel-icon"
               >
                 Batal
               </Button>
@@ -154,6 +169,7 @@ function ListTodo() {
                   deleteTodo(deleteData.id);
                   handleCloseModal();
                 }}
+                data-cy="modal-delete-confirm-button"
               >
                 Hapus
               </Button>
