@@ -72,6 +72,7 @@ function ListActivity() {
                       data-cy="activity-item-delete-button"
                     >
                       <img
+                      loading="lazy"
                         className="block w-[16px] h-[18px] hover:cursor-pointer"
                         src={trash}
                         alt="delete-icon"

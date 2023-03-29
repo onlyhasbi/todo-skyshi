@@ -49,6 +49,7 @@ function ModalInformation({ isOpen, onClose }: TProps) {
               >
                 <div className="ml-[1.875rem] flex gap-x-[0.8125rem] items-center">
                   <img
+                    loading="lazy"
                     src={circleWarning}
                     alt="circle-warning-icon"
                     data-cy="modal-information-icon"

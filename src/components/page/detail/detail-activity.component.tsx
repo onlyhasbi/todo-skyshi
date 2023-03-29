@@ -1,7 +1,6 @@
 import Button from "../../common/button.component";
 import ActivityService from "../../../service/activity.service";
 import Wrapper from "../../common/wrapper.component";
-import ListTodo from "./list-todo.component";
 import DialogModal from "../../element/dialog.component";
 import plus from "../../../assets/plus.svg";
 import arrowBack from "../../../assets/arrow-back.svg";
@@ -11,10 +10,11 @@ import clsx from "clsx";
 import SortPopper from "../../common/sort-popper.component";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState, lazy } from "react";
 import { useForm } from "react-hook-form";
 import { Popover, Transition } from "@headlessui/react";
 import { useClickAway } from "../../../utils/useClickAway.utils";
+const ListTodo = lazy(() => import("./list-todo.component"));
 
 function DetailActivity() {
   const navigate = useNavigate();
@@ -65,14 +65,15 @@ function DetailActivity() {
     navigate(-1);
   };
 
-  useClickAway(titleRef , handleUpdateTitle);
+  useClickAway(titleRef, handleUpdateTitle);
 
   return (
-    <>
+    <Suspense>
       <Wrapper>
         <section className="flex justify-between py-[3.063rem]">
           <div className="w-7/12 flex items-center text-4xl font-bold text-generalblack">
             <img
+              loading="lazy"
               className="block cursor-pointer"
               onClick={handlePreviousPage}
               src={arrowBack}
@@ -109,6 +110,7 @@ function DetailActivity() {
 
             <button onClick={handleEditTitle} data-cy="todo-title-edit-button">
               <img
+                loading="lazy"
                 className="block cursor-pointer"
                 src={pencil}
                 alt="pencil-icon"
@@ -123,7 +125,7 @@ function DetailActivity() {
                 data-cy="todo-sort-button"
               >
                 <>
-                  <img src={sort} alt="sort-icon" />
+                  <img loading="lazy" src={sort} alt="sort-icon" />
                 </>
               </Popover.Button>
               <Transition
@@ -153,7 +155,7 @@ function DetailActivity() {
         {<ListTodo />}
       </Wrapper>
       <DialogModal isOpen={openAddDialog} setIsOpen={setOpenAddDialog} />
-    </>
+    </Suspense>
   );
 }
 

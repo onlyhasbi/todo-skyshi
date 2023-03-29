@@ -75,6 +75,7 @@ function ListTodo() {
                       label={title}
                     />
                     <img
+                    loading="lazy"
                       className="block cursor-pointer ml-[1.208rem]"
                       onClick={() => {
                         setUpdateData((prev) => ({
@@ -91,6 +92,7 @@ function ListTodo() {
                     />
                   </div>
                   <img
+                  loading="lazy"
                     className="block w-[16px] h-[18px] hover:cursor-pointer"
                     src={trash}
                     alt="delete-icon"

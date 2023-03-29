@@ -25,6 +25,7 @@ function SortPopper() {
             data-cy="sort-selection"
           >
             <img
+              loading="lazy"
               className="block mr-[1.078rem] cursor-pointer"
               src={icon}
               alt="icon-sort"

@@ -80,6 +80,7 @@ function ModalDelete({ isOpen, onClose, data }: TProps) {
               >
                 <>
                   <img
+                  loading="lazy"
                     className="block w-[3.9rem] h-[3.5rem] mt-[3.15rem] mb-[3.2rem]"
                     src={warningIcon}
                     alt="warning-icon"

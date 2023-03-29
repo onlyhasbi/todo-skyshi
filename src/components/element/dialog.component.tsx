@@ -146,6 +146,7 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                 </span>
                 <span>
                   <img
+                    loading="lazy"
                     onClick={closeModal}
                     className="w-[0.75rem] h-[0.75rem] cursor-pointer"
                     src={closeIcon}
@@ -211,6 +212,7 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                                       </span>
                                     )}
                                     <img
+                                      loading="lazy"
                                       src={chevronIcon}
                                       className={`block h-[0.375rem] w-[0.75rem] transition-all duration-150 ease-linear ${
                                         !open ? "rotate-180" : ""
@@ -258,6 +260,7 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
                                                   </span>
                                                   {selected ? (
                                                     <img
+                                                      loading="lazy"
                                                       src={checkIcon}
                                                       className="block h-[0.469rem] w-[0.703rem]"
                                                       aria-hidden="true"

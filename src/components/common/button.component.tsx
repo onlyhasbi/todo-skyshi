@@ -19,7 +19,7 @@ function Button({ children, className, icon, textStyle, ...rest }: TProps) {
       {...rest}
     >
       <div className="flex gap-x-[.688rem] text-center">
-        {icon && <img src={icon} alt="icon" />}
+        {icon && <img loading="lazy" src={icon} alt="icon" />}
         <span className={clsx(["text-lg font-semibold", textStyle])}>
           {children}
         </span>
