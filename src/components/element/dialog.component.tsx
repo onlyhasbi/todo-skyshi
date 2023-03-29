@@ -5,7 +5,7 @@ import TodoService from "../../service/todo.service";
 import Button from "../common/button.component";
 import { Dialog, Transition, Listbox } from "@headlessui/react";
 import { useForm, Controller } from "react-hook-form";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, memo, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { getValueTodo } from "../../utils/getValueTodo.utils";
@@ -302,4 +302,4 @@ function DialogModal({ isOpen, setIsOpen, initialValue }: TProps) {
   );
 }
 
-export default DialogModal;
+export default memo(DialogModal);

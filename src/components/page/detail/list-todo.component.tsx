@@ -6,7 +6,6 @@ import clsx from "clsx";
 import trash from "../../../assets/delete.svg";
 import pencil from "../../../assets/pencil.svg";
 import emptyTodo from "../../../assets/todo-empty-state.svg";
-import getSort from "../../../utils/getSort.utils";
 import { memo, Suspense, useEffect, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getValueTodo } from "../../../utils/getValueTodo.utils";
@@ -45,11 +44,8 @@ function ListTodo() {
 
   const { queryGetTodos } = TodoService();
   const { data: response, isLoading } = useQuery(queryGetTodos(Number(id)));
-  const [todos, setTodos] = useState<TTodos[]>([]);
 
-  useEffect(() => {
-    setTodos(getSort(sort, response));
-  }, [response, sort]);
+  const todos = getSort(sort, response);
 
   const handleOpenUpdateDialog = () => {
     setOpenUpdateDialog(true);
@@ -119,6 +115,35 @@ function ListTodo() {
     );
 
   return <EmptyActivity src={emptyTodo} />;
+}
+
+const sort = {
+  new: (a: TTodos, b: TTodos) => {
+    if (a.id - b.id) return -1;
+  },
+  old: (a: TTodos, b: TTodos) => {
+    if (b.id - a.id) return 1;
+  },
+  az: (a: TTodos, b: TTodos) => {
+    let first = a.title.toLowerCase();
+    let second = b.title.toLowerCase();
+    if (second < first) {
+      return 1;
+    }
+  },
+  za: (a: TTodos, b: TTodos) => {
+    let first = a.title.toLowerCase();
+    let second = b.title.toLowerCase();
+    if (first < second) {
+      return -1;
+    }
+  },
+  unchecked: (a: TTodos, b: TTodos) => b.is_active === 1,
+};
+
+function getSort(by: string, values: any) {
+  let todos = values ? values.todo_items : [];
+  return [...todos].sort(sort[by]);
 }
 
 export default memo(ListTodo);
