@@ -39,7 +39,11 @@ function ListTodo() {
   const [openUpdateDialog, setOpenUpdateDialog] = useState<boolean>(false);
 
   const { queryGetTodos } = TodoService();
-  const { data: response, isLoading } = useQuery(queryGetTodos(Number(id)));
+  const {
+    data: response,
+    isLoading,
+    isSuccess,
+  } = useQuery(queryGetTodos(Number(id)));
 
   const [todos, setTodos] = useState<TTodos[]>([]);
 
@@ -52,8 +56,7 @@ function ListTodo() {
   };
 
   if (isLoading) <Suspense></Suspense>;
-
-  if (todos.length > 0) {
+  if (isSuccess && todos.length > 0) {
     return (
       <>
         <Suspense>

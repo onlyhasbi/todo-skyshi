@@ -23,7 +23,7 @@ function ListActivity() {
   const setDeleteData = useTodoStore((state) => state.setDeleteData);
 
   const { queryGetActivities } = ActivityService();
-  const { data: response, isLoading } = useQuery(queryGetActivities);
+  const { data: response, isLoading, isSuccess } = useQuery(queryGetActivities);
   const activities = response?.data ? response.data : [];
 
   const handleDetailActivity = (id: number, title: string) => {
@@ -31,8 +31,7 @@ function ListActivity() {
   };
 
   if (isLoading) <Suspense></Suspense>;
-
-  if (activities.length > 0) {
+  if (isSuccess && activities.length > 0) {
     return (
       <>
         <Suspense>
