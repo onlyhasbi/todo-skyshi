@@ -35,7 +35,7 @@ function ListTodo() {
 
   const sortTodos = useMemo(() => {
     return getSort(sort, todos);
-  }, [response, todos]);
+  }, [todos, sort]);
 
   if (isSuccess && sortTodos.length === 0) {
     return <EmptyActivity src={emptyTodo} section="todo" />;
