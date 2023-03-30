@@ -80,7 +80,7 @@ function ListActivity() {
         </Suspense>
       );
     } else {
-      return <EmptyActivity src={emptyState} />;
+      return <EmptyActivity src={emptyState} section="activity" />;
     }
   }
 

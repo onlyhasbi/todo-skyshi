@@ -94,7 +94,7 @@ function ListTodo() {
         </>
       );
     } else {
-      return <EmptyActivity src={emptyTodo} />;
+      return <EmptyActivity src={emptyTodo} section="todo"/>;
     }
   }
 

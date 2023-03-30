@@ -31,7 +31,7 @@ function App() {
       <ModalDelete
         isOpen={Boolean(deleteData)}
         onClose={() => setDeleteData(false)}
-        data={deleteData as TDeleteData}
+        data={deleteData as unknown as TDeleteData}
       />
     </>
   );
