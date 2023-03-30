@@ -9,8 +9,8 @@ import { useTodoStore } from "../../store/todo";
 
 type TProps = {
   isOpen: boolean;
-  data?: TDeleteData;
   onClose: () => void;
+  data?: TDeleteData;
 };
 
 function ModalDelete({ isOpen, onClose, data }: TProps) {

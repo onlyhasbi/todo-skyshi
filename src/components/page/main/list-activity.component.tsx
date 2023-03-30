@@ -19,7 +19,6 @@ declare global {
 
 function ListActivity() {
   const navigate = useNavigate();
-  const setIsDelete = useTodoStore((state) => state.setIsDelete);
   const setDeleteData = useTodoStore((state) => state.setDeleteData);
 
   const { queryGetActivities } = ActivityService();
@@ -63,7 +62,6 @@ function ListActivity() {
                     <button
                       onClick={() => {
                         setDeleteData({ id, title, section: "activity" });
-                        setIsDelete(true);
                       }}
                       data-cy="activity-item-delete-button"
                     >

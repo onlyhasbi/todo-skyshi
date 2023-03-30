@@ -159,7 +159,10 @@ function DetailActivity() {
           <ListTodo />
         </Wrapper>
       </Suspense>
-      <DialogModal isOpen={openAddDialog} setIsOpen={setOpenAddDialog} />
+      <DialogModal
+        isOpen={openAddDialog}
+        onClose={() => setOpenAddDialog(false)}
+      />
     </>
   );
 }

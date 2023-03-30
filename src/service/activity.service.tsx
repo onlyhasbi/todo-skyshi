@@ -39,7 +39,7 @@ function ActivityService() {
       queryKey: ["Activity"],
       queryFn: () => {
         return axios
-          .get<TFetchActivity>(`${URL.ACTIVITY}/?email=yoga%2B1%40skyshi.io`)
+          .get<TFetchActivity>(`${URL.ACTIVITY}/?email=onlyhasbi@gmail.com`)
           .then(({ data }) => data);
       },
     },
@@ -49,7 +49,7 @@ function ActivityService() {
         return axios
           .post<TFetchActivity>(URL.ACTIVITY, {
             title: "New Activity",
-            email: "yoga+1@skyshi.io",
+            email: "onlyhasbi@gmail.com",
             _comment:
               "email digunakan untuk membedakan list data yang digunakan antar aplikasi",
           })

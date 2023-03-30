@@ -3,20 +3,21 @@ import closeIcon from "../../assets/close.svg";
 import chevronIcon from "../../assets/chevron.svg";
 import TodoService from "../../service/todo.service";
 import Button from "../common/button.component";
-import clsx from "clsx";
-import { Dialog, Listbox, Transition } from "@headlessui/react";
+import { Dialog, Listbox } from "@headlessui/react";
 import { useForm, Controller } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { getValueTodo } from "../../utils/getValueTodo.utils";
 import { PRIORITY } from "../../model/priority.model";
-import { useTodoStore } from "../../store/todo";
 
-type TProps = {
-  isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
+declare global {
+  type TUpdateData = {
+    id: number;
+    todo: string;
+    priority: string;
+  };
+}
 
 type TPriorityProps = {
   label: string;
@@ -24,12 +25,18 @@ type TPriorityProps = {
   color: React.ReactElement;
 };
 
+type TProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  initialValue?: TUpdateData;
+};
+
 const defaultValues = {
   todo: "",
   priority: "very-high",
 };
 
-function DialogModal({ isOpen, setIsOpen }: TProps) {
+function DialogModal({ isOpen, onClose, initialValue }: TProps) {
   const {
     control,
     register,
@@ -44,19 +51,14 @@ function DialogModal({ isOpen, setIsOpen }: TProps) {
   const { queryPostTodo, queryUpdateTodo } = TodoService();
   const { mutate: addTodo } = useMutation(queryPostTodo);
   const { mutate: updateTodo } = useMutation(queryUpdateTodo);
-  const { onChange } = register("priority");
-
   const [selected, setSelected] = useState<string>("very-high");
 
-  const updateData = useTodoStore((state) => state.updateData);
-  const setUpdateData = useTodoStore((state) => state.setUpdateData);
-
   const closeModal = () => {
-    setIsOpen(false);
+    onClose();
   };
 
   const onSubmit = (data: any) => {
-    if (!updateData) {
+    if (!initialValue) {
       const defaultAddData = {
         activity_group_id: Number(id),
         title: data.todo,
@@ -67,23 +69,25 @@ function DialogModal({ isOpen, setIsOpen }: TProps) {
       setSelected("very-high");
     } else {
       const defaultUpdateData = {
-        id: Number(updateData.id),
+        id: Number(initialValue.id),
         todo: data.todo,
         priority: data.priority,
       };
       updateTodo(defaultUpdateData);
-      setUpdateData(null);
-      setIsOpen(false);
+      onClose();
     }
+
+    console.log(data);
   };
 
   useEffect(() => {
-    if (updateData) {
-      setValue("todo", updateData.todo);
-      setValue("priority", updateData.priority);
-      setSelected(updateData.priority);
+    console.log(initialValue);
+    if (initialValue) {
+      setValue("todo", initialValue.todo);
+      setValue("priority", initialValue.priority);
+      setSelected(initialValue.priority);
     }
-  }, []);
+  }, [initialValue]);
 
   useEffect(() => {
     let delayFocused: any;
@@ -156,86 +160,92 @@ function DialogModal({ isOpen, setIsOpen }: TProps) {
                 >
                   PRIORITY
                 </label>
-                <Listbox
-                  value={getValueTodo("value", selected)}
-                  onChange={(e) => {
-                    onChange(e);
-                    setSelected(e);
-                  }}
-                >
-                  {({ open }) => (
-                    <>
-                      <div className={`relative`}>
-                        <Listbox.Button
-                          data-cy="modal-add-priority-dropdown"
-                          className="flex items-center w-[12.813rem] cursor-pointer font-normal placeholder:text-generalsecondary rounded-[0.375rem] py-[0.875rem] px-[1.125rem] border border-[#E5E5E5] active:border-blue-600"
-                        >
-                          {!open ? (
-                            <>
-                              {getValueTodo("color", selected)}
-                              <p className="text-left truncate ml-[1.188rem] text-generalblack">
-                                {getValueTodo("label", selected)}
-                              </p>
-                            </>
-                          ) : (
-                            <p className="text-left truncate text-generalblack">
-                              Pilih Priority
-                            </p>
-                          )}
-                          <img
-                            loading="lazy"
-                            src={chevronIcon}
-                            className={`block h-[0.375rem] w-[0.75rem] ml-auto transition-all duration-300 ease-linear ${
-                              !open ? "rotate-180" : ""
-                            }`}
-                            aria-hidden="true"
-                            alt="chevron"
-                          />
-                        </Listbox.Button>
+                <Controller
+                  control={control}
+                  name="priority"
+                  render={({ field: { onChange } }) => (
+                    <Listbox
+                      value={getValueTodo("value", selected)}
+                      onChange={(e) => {
+                        onChange(e);
+                        setSelected(e);
+                      }}
+                    >
+                      {({ open }) => (
+                        <>
+                          <div className={`relative`}>
+                            <Listbox.Button
+                              data-cy="modal-add-priority-dropdown"
+                              className="flex items-center w-[12.813rem] cursor-pointer font-normal placeholder:text-generalsecondary rounded-[0.375rem] py-[0.875rem] px-[1.125rem] border border-[#E5E5E5] active:border-blue-600"
+                            >
+                              {!open ? (
+                                <>
+                                  {getValueTodo("color", selected)}
+                                  <p className="text-left truncate ml-[1.188rem] text-generalblack">
+                                    {getValueTodo("label", selected)}
+                                  </p>
+                                </>
+                              ) : (
+                                <p className="text-left truncate text-generalblack">
+                                  Pilih Priority
+                                </p>
+                              )}
+                              <img
+                                loading="lazy"
+                                src={chevronIcon}
+                                className={`block h-[0.375rem] w-[0.75rem] ml-auto transition-all duration-300 ease-linear ${
+                                  !open ? "rotate-180" : ""
+                                }`}
+                                aria-hidden="true"
+                                alt="chevron"
+                              />
+                            </Listbox.Button>
 
-                        <Listbox.Options className="absolute w-[12.813rem] overflow-hidden rounded-md bg-white shadow-lg">
-                          {PRIORITY.map(
-                            (
-                              { label, value, color }: TPriorityProps,
-                              index
-                            ) => (
-                              <Listbox.Option
-                                key={index}
-                                data-cy="modal-add-priority-item"
-                                className={`py-[0.875rem] border-b text-generalsecondary cursor-pointer hover:bg-sky-100`}
-                                value={value}
-                              >
-                                {({ selected }) => (
-                                  <>
-                                    <div className="flex items-center ml-[1.063rem] mr-[1.625rem]">
-                                      <span className="w-[0.875rem] h-[0.875rem]">
-                                        {color}
-                                      </span>
-                                      <span
-                                        className={`block truncate ml-[1.188rem] mr-auto`}
-                                      >
-                                        {label}
-                                      </span>
-                                      {selected ? (
-                                        <img
-                                          loading="lazy"
-                                          src={checkIcon}
-                                          className="block h-[0.469rem] w-[0.703rem]"
-                                          aria-hidden="true"
-                                          alt="check-icon"
-                                        />
-                                      ) : null}
-                                    </div>
-                                  </>
-                                )}
-                              </Listbox.Option>
-                            )
-                          )}
-                        </Listbox.Options>
-                      </div>
-                    </>
+                            <Listbox.Options className="absolute w-[12.813rem] overflow-hidden rounded-md bg-white shadow-lg">
+                              {PRIORITY.map(
+                                (
+                                  { label, value, color }: TPriorityProps,
+                                  index
+                                ) => (
+                                  <Listbox.Option
+                                    key={index}
+                                    data-cy="modal-add-priority-item"
+                                    className={`py-[0.875rem] border-b text-generalsecondary cursor-pointer hover:bg-sky-100`}
+                                    value={value}
+                                  >
+                                    {({ selected }) => (
+                                      <>
+                                        <div className="flex items-center ml-[1.063rem] mr-[1.625rem]">
+                                          <span className="w-[0.875rem] h-[0.875rem]">
+                                            {color}
+                                          </span>
+                                          <span
+                                            className={`block truncate ml-[1.188rem] mr-auto`}
+                                          >
+                                            {label}
+                                          </span>
+                                          {selected ? (
+                                            <img
+                                              loading="lazy"
+                                              src={checkIcon}
+                                              className="block h-[0.469rem] w-[0.703rem]"
+                                              aria-hidden="true"
+                                              alt="check-icon"
+                                            />
+                                          ) : null}
+                                        </div>
+                                      </>
+                                    )}
+                                  </Listbox.Option>
+                                )
+                              )}
+                            </Listbox.Options>
+                          </div>
+                        </>
+                      )}
+                    </Listbox>
                   )}
-                </Listbox>
+                />
               </div>
             </div>
 
@@ -245,7 +255,7 @@ function DialogModal({ isOpen, setIsOpen }: TProps) {
                 disabled={!Boolean(watch("todo"))}
                 data-cy="modal-add-save-button"
               >
-                {updateData ? "Simpan" : "Tambah"}
+                {initialValue ? "Simpan" : "Tambah"}
               </Button>
             </div>
           </form>

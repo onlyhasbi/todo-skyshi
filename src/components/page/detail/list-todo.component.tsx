@@ -5,13 +5,13 @@ import clsx from "clsx";
 import trash from "../../../assets/delete.svg";
 import pencil from "../../../assets/pencil.svg";
 import emptyTodo from "../../../assets/todo-empty-state.svg";
-import { lazy, memo, Suspense, useEffect, useMemo, useState } from "react";
+import { lazy, memo, Suspense, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getValueTodo } from "../../../utils/getValueTodo.utils";
 import { useParams } from "react-router-dom";
 import { useTodoStore } from "../../../store/todo";
 import { getSort } from "../../../utils/sort.utils";
-import DialogModal from "../../element/dialog.component";
+const DialogModal = lazy(() => import("../../element/dialog.component"));
 
 declare global {
   type TTodos = {
@@ -26,15 +26,8 @@ declare global {
 function ListTodo() {
   const { id } = useParams();
   const sort = useTodoStore((state) => state.sort);
-
-  const setIsDelete = useTodoStore((state) => state.setIsDelete);
   const setDeleteData = useTodoStore((state) => state.setDeleteData);
-  const setUpdateData = useTodoStore((state) => state.setUpdateData);
-  const [openUpdateDialog, setOpenUpdateDialog] = useState<boolean>(false);
-
-  const handleOpenUpdateDialog = () => {
-    setOpenUpdateDialog(true);
-  };
+  const [updateData, setUpdateData] = useState<TUpdateData | boolean>(false);
 
   const { queryGetTodos } = TodoService();
   const { data: response, isSuccess } = useQuery(queryGetTodos(Number(id)));
@@ -72,7 +65,6 @@ function ListTodo() {
                         className="block cursor-pointer ml-[1.208rem]"
                         onClick={() => {
                           setUpdateData({ id, todo: title, priority });
-                          handleOpenUpdateDialog();
                         }}
                         src={pencil}
                         alt="pencil-icon"
@@ -86,7 +78,6 @@ function ListTodo() {
                       alt="delete-icon"
                       onClick={() => {
                         setDeleteData({ id, title, section: "list item" });
-                        setIsDelete(true);
                       }}
                       data-cy="todo-item-delete-button"
                     />
@@ -96,8 +87,9 @@ function ListTodo() {
             </ul>
           </Suspense>
           <DialogModal
-            isOpen={openUpdateDialog}
-            setIsOpen={setOpenUpdateDialog}
+            isOpen={Boolean(updateData)}
+            onClose={() => setUpdateData(false)}
+            initialValue={updateData as TUpdateData}
           />
         </>
       );
