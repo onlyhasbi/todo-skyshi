@@ -1,13 +1,13 @@
 import dayjs from "dayjs";
-import Card from "../../common/card.component";
 import trash from "../../../assets/delete.svg";
 import emptyState from "../../../assets/activity-empty-state.svg";
 import EmptyActivity from "../../common/empty-activity.component";
 import ActivityService from "../../../service/activity.service";
 import { useNavigate } from "react-router-dom";
-import { memo, Suspense } from "react";
+import { lazy, memo, Suspense } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTodoStore } from "../../../store/todo";
+const Card = lazy(() => import("../../common/card.component"));
 
 declare global {
   type TActivity = {
@@ -34,11 +34,11 @@ function ListActivity() {
   }
 
   return (
-    <Suspense>
-      <div className="flex gap-x-[1.25rem] gap-y-[1.625rem] flex-wrap pb-[17.063rem]">
-        {activities.map((activity: TActivity) => {
-          const { id, title, created_at } = activity;
-          return (
+    <div className="flex gap-x-[1.25rem] gap-y-[1.625rem] flex-wrap pb-[17.063rem]">
+      {activities.map((activity: TActivity) => {
+        const { id, title, created_at } = activity;
+        return (
+          <Suspense>
             <Card
               className="flex flex-col justify-between py-[1.375rem] px-[1.688rem] hover:cursor-pointer"
               key={id}
@@ -77,10 +77,10 @@ function ListActivity() {
                 </button>
               </div>
             </Card>
-          );
-        })}
-      </div>
-    </Suspense>
+          </Suspense>
+        );
+      })}
+    </div>
   );
 }
 

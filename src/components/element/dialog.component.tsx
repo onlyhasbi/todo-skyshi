@@ -76,12 +76,9 @@ function DialogModal({ isOpen, onClose, initialValue }: TProps) {
       updateTodo(defaultUpdateData);
       onClose();
     }
-
-    console.log(data);
   };
 
   useEffect(() => {
-    console.log(initialValue);
     if (initialValue) {
       setValue("todo", initialValue.todo);
       setValue("priority", initialValue.priority);

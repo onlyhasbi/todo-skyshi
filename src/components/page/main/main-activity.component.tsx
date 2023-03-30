@@ -22,27 +22,27 @@ function MainActivity() {
   }, []);
 
   return (
-    <Suspense>
-      <Wrapper>
-        <section className="flex justify-between py-[3.063rem]">
-          <span
-            className="text-4xl font-bold text-generalblack"
-            data-cy="activity-title"
-          >
-            Activity
-          </span>
-          <Button
-            className="bg-primary"
-            data-cy="activity-add-button"
-            icon={plus}
-            onClick={handleAddActivity}
-          >
-            Tambah
-          </Button>
-        </section>
+    <Wrapper>
+      <section className="flex justify-between py-[3.063rem]">
+        <span
+          className="text-4xl font-bold text-generalblack"
+          data-cy="activity-title"
+        >
+          Activity
+        </span>
+        <Button
+          className="bg-primary"
+          data-cy="activity-add-button"
+          icon={plus}
+          onClick={handleAddActivity}
+        >
+          Tambah
+        </Button>
+      </section>
+      <Suspense>
         <ListActivity />
-      </Wrapper>
-    </Suspense>
+      </Suspense>
+    </Wrapper>
   );
 }
 
