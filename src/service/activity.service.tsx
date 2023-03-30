@@ -2,13 +2,6 @@ import { URL } from "./url.service";
 import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
 
-type TFetchActivity = {
-  total: number;
-  limit: number;
-  skip: number;
-  data: TActivity[];
-};
-
 type TTodo = {
   id: number;
   title: string;
@@ -23,6 +16,13 @@ type TPatch = {
 };
 
 declare global {
+  type TFetchActivity = {
+    total: number;
+    limit: number;
+    skip: number;
+    data: TActivity[];
+  };
+
   type TFetchDetailActivity = {
     id: number;
     title: string;

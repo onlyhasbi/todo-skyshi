@@ -14,7 +14,7 @@ import { getSort } from "../../../utils/sort.utils";
 const DialogModal = lazy(() => import("../../element/dialog.component"));
 
 declare global {
-  type TTodos = {
+  type TTodo = {
     id: number;
     title: string;
     activity_group_id: number;
@@ -31,74 +31,69 @@ function ListTodo() {
 
   const { queryGetTodos } = TodoService();
   const { data: response, isSuccess } = useQuery(queryGetTodos(Number(id)));
+  const todos: TTodo[] = response?.todo_items || [];
 
-  const todos = useMemo(() => {
-    if (isSuccess) {
-      return getSort(sort, response);
-    }
-  }, [response, sort]);
+  const sortTodos = useMemo(() => {
+    return getSort(sort, todos);
+  }, [response, todos]);
 
-  if (isSuccess) {
-    if (todos.length > 0) {
-      return (
-        <>
-          <Suspense>
-            <ul className="space-y-[0.625rem] pb-[14.875rem]">
-              {todos.map(({ id, title, is_active, priority }: TTodos) => {
-                return (
-                  <li
-                    key={id}
-                    className={clsx([
-                      "flex items-center justify-between w-full h-[5rem]",
-                      "bg-white rounded-xl shadow-xl px-[1.75rem]",
-                    ])}
-                  >
-                    <div className="flex items-center">
-                      <Checked
-                        id={id}
-                        active={is_active}
-                        color={getValueTodo("color", priority)}
-                        label={title}
-                      />
-                      <img
-                        loading="lazy"
-                        className="block cursor-pointer ml-[1.208rem]"
-                        onClick={() => {
-                          setUpdateData({ id, todo: title, priority });
-                        }}
-                        src={pencil}
-                        alt="pencil-icon"
-                        data-cy="todo-item-edit-button"
-                      />
-                    </div>
-                    <img
-                      loading="lazy"
-                      className="block w-[16px] h-[18px] hover:cursor-pointer"
-                      src={trash}
-                      alt="delete-icon"
-                      onClick={() => {
-                        setDeleteData({ id, title, section: "list item" });
-                      }}
-                      data-cy="todo-item-delete-button"
-                    />
-                  </li>
-                );
-              })}
-            </ul>
-          </Suspense>
-          <DialogModal
-            isOpen={Boolean(updateData)}
-            onClose={() => setUpdateData(false)}
-            initialValue={updateData as TUpdateData}
-          />
-        </>
-      );
-    } else {
-      return <EmptyActivity src={emptyTodo} section="todo"/>;
-    }
+  if (isSuccess && sortTodos.length === 0) {
+    return <EmptyActivity src={emptyTodo} section="todo" />;
   }
 
-  return null;
+  return (
+    <>
+      <Suspense>
+        <ul className="space-y-[0.625rem] pb-[14.875rem]">
+          {sortTodos.map(({ id, title, is_active, priority }: TTodo) => {
+            return (
+              <li
+                key={id}
+                className={clsx([
+                  "flex items-center justify-between w-full h-[5rem]",
+                  "bg-white rounded-xl shadow-xl px-[1.75rem]",
+                ])}
+              >
+                <div className="flex items-center">
+                  <Checked
+                    id={id}
+                    active={is_active}
+                    color={getValueTodo("color", priority)}
+                    label={title}
+                  />
+                  <img
+                    loading="lazy"
+                    className="block cursor-pointer ml-[1.208rem]"
+                    onClick={() => {
+                      setUpdateData({ id, todo: title, priority });
+                    }}
+                    src={pencil}
+                    alt="pencil-icon"
+                    data-cy="todo-item-edit-button"
+                  />
+                </div>
+                <img
+                  loading="lazy"
+                  className="block w-[16px] h-[18px] hover:cursor-pointer"
+                  src={trash}
+                  alt="delete-icon"
+                  onClick={() => {
+                    setDeleteData({ id, title, section: "list item" });
+                  }}
+                  data-cy="todo-item-delete-button"
+                />
+              </li>
+            );
+          })}
+        </ul>
+      </Suspense>
+      <DialogModal
+        isOpen={Boolean(updateData)}
+        onClose={() => setUpdateData(false)}
+        initialValue={updateData as TUpdateData}
+      />
+    </>
+  );
 }
 
 export default memo(ListTodo);

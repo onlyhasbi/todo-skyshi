@@ -19,12 +19,14 @@ type TUpdateTodo = {
   priority: string;
 };
 
-type TFetchTodos = {
-  id: number;
-  title: string;
-  created_at: string;
-  todo_items: [];
-};
+declare global {
+  type TFetchTodos = {
+    id: number;
+    title: string;
+    created_at: string;
+    todo_items: [];
+  };
+}
 
 function TodoService() {
   const queryClient = useQueryClient();

@@ -1,22 +1,21 @@
-export function getSort(by: string, values: any) {
-  const todos = values ? values.todo_items : [];
+export function getSort(by: string, todos: TTodo[]) {
 
   switch (by) {
     case "new":
-      return [...todos].sort((a: TTodos, b: TTodos) => b.id - a.id);
+      return [...todos].sort((a: TTodo, b: TTodo) => b.id - a.id);
     case "old":
-      return [...todos].sort((a: TTodos, b: TTodos) => a.id - b.id);
+      return [...todos].sort((a: TTodo, b: TTodo) => a.id - b.id);
     case "az":
-      return [...todos].sort((a: TTodos, b: TTodos) =>
+      return [...todos].sort((a: TTodo, b: TTodo) =>
         a.title.localeCompare(b.title)
       );
     case "za":
       return [...todos]
-        .sort((a: TTodos, b: TTodos) => a.title.localeCompare(b.title))
+        .sort((a: TTodo, b: TTodo) => a.title.localeCompare(b.title))
         .reverse();
     case "unchecked":
       return [...todos].sort(
-        (a: TTodos, b: TTodos) => b.is_active - a.is_active
+        (a: TTodo, b: TTodo) => b.is_active - a.is_active
       );
     default:
       return todos;
