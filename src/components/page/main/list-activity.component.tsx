@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import Card from "../../common/card.component";
-import trash from "../../../assets/delete.svg?inline";
-import emptyState from "../../../assets/activity-empty-state.svg?inline";
+import trash from "../../../assets/delete.svg";
+import emptyState from "../../../assets/activity-empty-state.svg";
 import EmptyActivity from "../../common/empty-activity.component";
 import ActivityService from "../../../service/activity.service";
 import { useNavigate } from "react-router-dom";

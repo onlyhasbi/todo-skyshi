@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import circleWarning from "../../assets/warning-circle.svg?inline";
+import circleWarning from "../../assets/warning-circle.svg";
 import { Dialog } from "@headlessui/react";
 
 type TProps = {

@@ -2,16 +2,16 @@ import TodoService from "../../../service/todo.service";
 import Checked from "../../common/checked.component";
 import EmptyActivity from "../../common/empty-activity.component";
 import clsx from "clsx";
-import trash from "../../../assets/delete.svg?inline";
-import pencil from "../../../assets/pencil.svg?inline";
-import emptyTodo from "../../../assets/todo-empty-state.svg?inline";
+import trash from "../../../assets/delete.svg";
+import pencil from "../../../assets/pencil.svg";
+import emptyTodo from "../../../assets/todo-empty-state.svg";
 import { lazy, memo, Suspense, useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getValueTodo } from "../../../utils/getValueTodo.utils";
 import { useParams } from "react-router-dom";
 import { useTodoStore } from "../../../store/todo";
 import { getSort } from "../../../utils/sort.utils";
-const DialogModal = lazy(() => import("../../element/dialog.component"));
+import DialogModal from "../../element/dialog.component";
 
 declare global {
   type TTodos = {
@@ -29,14 +29,9 @@ function ListTodo() {
 
   const setIsDelete = useTodoStore((state) => state.setIsDelete);
   const setDeleteData = useTodoStore((state) => state.setDeleteData);
-
-  const [updateData, setUpdateData] = useState<TTodoProps>({
-    id: -1,
-    todo: "",
-    priority: "",
-  });
-
+  const setUpdateData = useTodoStore((state) => state.setUpdateData);
   const [openUpdateDialog, setOpenUpdateDialog] = useState<boolean>(false);
+
   const handleOpenUpdateDialog = () => {
     setOpenUpdateDialog(true);
   };
@@ -76,12 +71,7 @@ function ListTodo() {
                         loading="lazy"
                         className="block cursor-pointer ml-[1.208rem]"
                         onClick={() => {
-                          setUpdateData((prev) => ({
-                            ...prev,
-                            id,
-                            todo: title,
-                            priority,
-                          }));
+                          setUpdateData({ id, todo: title, priority });
                           handleOpenUpdateDialog();
                         }}
                         src={pencil}
@@ -107,7 +97,6 @@ function ListTodo() {
           </Suspense>
           <DialogModal
             isOpen={openUpdateDialog}
-            initialValue={updateData}
             setIsOpen={setOpenUpdateDialog}
           />
         </>

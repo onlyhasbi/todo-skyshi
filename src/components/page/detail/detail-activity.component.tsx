@@ -1,10 +1,10 @@
 import Button from "../../common/button.component";
 import ActivityService from "../../../service/activity.service";
 import DialogModal from "../../element/dialog.component";
-import plus from "../../../assets/plus.svg?inline";
-import arrowBack from "../../../assets/arrow-back.svg?inline";
-import pencil from "../../../assets/pencil.svg?inline";
-import sort from "../../../assets/sort.svg?inline";
+import plus from "../../../assets/plus.svg";
+import arrowBack from "../../../assets/arrow-back.svg";
+import pencil from "../../../assets/pencil.svg";
+import sort from "../../../assets/sort.svg";
 import clsx from "clsx";
 import SortPopper from "../../common/sort-popper.component";
 import Wrapper from "../../layout/wrapper.component";
@@ -14,7 +14,7 @@ import { Suspense, useEffect, useState, lazy } from "react";
 import { useForm } from "react-hook-form";
 import { Popover, Transition } from "@headlessui/react";
 import { useClickAway } from "../../../utils/useClickAway.utils";
-const ListTodo = lazy(() => import("./list-todo.component"));
+import ListTodo from "./list-todo.component";
 
 function DetailActivity() {
   const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import warningIcon from "../../assets/warning.svg?inline";
+import warningIcon from "../../assets/warning.svg";
 import ActivityService from "../../service/activity.service";
 import TodoService from "../../service/todo.service";
 import Button from "../common/button.component";

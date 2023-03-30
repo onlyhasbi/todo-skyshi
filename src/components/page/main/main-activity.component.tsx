@@ -1,4 +1,4 @@
-import plus from "../../../assets/plus.svg?inline";
+import plus from "../../../assets/plus.svg";
 import ActivityService from "../../../service/activity.service";
 import Button from "../../common/button.component";
 import Wrapper from "../../layout/wrapper.component";

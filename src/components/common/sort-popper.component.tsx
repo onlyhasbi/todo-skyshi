@@ -1,4 +1,4 @@
-import checked from "../../assets/check.svg?inline";
+import checked from "../../assets/check.svg";
 import { SORT } from "../../model/sort.model";
 import { useState } from "react";
 import { useTodoStore } from "../../store/todo";

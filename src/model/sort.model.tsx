@@ -1,8 +1,8 @@
-import sortByNew from "../assets/sort-new.svg?inline";
-import sortByOld from "../assets/sort-old.svg?inline";
-import sortByAZ from "../assets/sort-az.svg?inline";
-import sortByZA from "../assets/sort-za.svg?inline";
-import sortByUnchecked from "../assets/not-yet.svg?inline";
+import sortByNew from "../assets/sort-new.svg";
+import sortByOld from "../assets/sort-old.svg";
+import sortByAZ from "../assets/sort-az.svg";
+import sortByZA from "../assets/sort-za.svg";
+import sortByUnchecked from "../assets/not-yet.svg";
 
 export const SORT = [
   { label: "Terbaru", icon: sortByNew, value: "new" },
