@@ -121,12 +121,10 @@ function DetailActivity() {
           <div className="flex items-center gap-x-[1.125rem]">
             <Popover className="relative">
               <Popover.Button
-                className="w-[3.375rem] h-[3.375rem]"
+                className="flex items-center w-[3.375rem] h-[3.375rem]"
                 data-cy="todo-sort-button"
               >
-                <>
-                  <img loading="lazy" src={sort} alt="sort-icon" />
-                </>
+                <img loading="lazy" src={sort} alt="sort-icon" />
               </Popover.Button>
               <Transition
                 enter="transition ease-out duration-100 transform"

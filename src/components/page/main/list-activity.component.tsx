@@ -4,7 +4,7 @@ import emptyState from "../../../assets/activity-empty-state.svg";
 import EmptyActivity from "../../common/empty-activity.component";
 import ActivityService from "../../../service/activity.service";
 import { useNavigate } from "react-router-dom";
-import { lazy, memo, Suspense } from "react";
+import { memo, Suspense, lazy } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTodoStore } from "../../../store/todo";
 const Card = lazy(() => import("../../common/card.component"));
@@ -38,11 +38,8 @@ function ListActivity() {
       {activities.map((activity: TActivity) => {
         const { id, title, created_at } = activity;
         return (
-          <Suspense>
-            <Card
-              className="flex flex-col justify-between py-[1.375rem] px-[1.688rem] hover:cursor-pointer"
-              key={id}
-            >
+          <Suspense key={id}>
+            <Card className="flex flex-col justify-between py-[1.375rem] px-[1.688rem] hover:cursor-pointer">
               <div
                 onClick={() => handleDetailActivity(id, title)}
                 className="h-full"
